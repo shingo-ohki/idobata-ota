@@ -1,9 +1,9 @@
-import { BookOpen, HeartHandshake, Home, Menu, UserRound } from "lucide-react";
+import { BookOpen, HeartHandshake, Home, Menu, UserRound, X } from "lucide-react";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSiteConfig } from "../../contexts/SiteConfigContext";
 import { Button } from "../ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
 
 // ロゴ画像のパス
 const LOGO_PATH = "/images/idobata-logo.svg";
@@ -91,17 +91,35 @@ const Header: React.FC = () => {
                 <Menu className="w-8 h-8 stroke-2 text-[#2D80FF]" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-64 p-0">
-              <nav className="flex flex-col gap-6 mt-8 px-6">
-                {NAV_ITEMS.map(({ label, icon: Icon, to }) => (
-                  <Link
-                    key={label}
-                    to={to}
-                    className="flex items-center gap-3 text-base font-bold tracking-wider text-[#27272A] hover:text-[#2D80FF] transition-colors"
+            <SheetContent
+              side="right"
+              className="w-[262.5px] p-0 bg-white"
+              style={{ width: '262.5px' }}
+            >
+              {/* ✕ボタン */}
+              <div className="flex justify-end p-6 pb-0">
+                <SheetClose asChild>
+                  <Button
+                    variant="ghost"
+                    className="w-10 h-10 p-0 hover:bg-transparent"
                   >
-                    <Icon className="w-6 h-6" />
-                    {label}
-                  </Link>
+                    <X className="w-8 h-8 stroke-2 text-[#2D80FF]" />
+                  </Button>
+                </SheetClose>
+              </div>
+
+              {/* メニュー項目 */}
+              <nav className="flex flex-col gap-6 px-6 mt-12">
+                {NAV_ITEMS.map(({ label, icon: Icon, to }) => (
+                  <SheetClose key={label} asChild>
+                    <Link
+                      to={to}
+                      className="flex items-center gap-3 text-base font-bold tracking-[0.025em] text-[#27272A] hover:text-[#2D80FF] transition-colors leading-8"
+                    >
+                      <Icon className="w-8 h-8 stroke-2 text-[#60A5FA]" />
+                      {label}
+                    </Link>
+                  </SheetClose>
                 ))}
               </nav>
             </SheetContent>
