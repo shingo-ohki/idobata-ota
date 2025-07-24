@@ -9,17 +9,15 @@ const FooterDd2030 = () => {
         <div className="flex flex-col md:flex-row md:items-center md:gap-8">
           {/* ロゴエリア */}
           <div className="flex justify-center md:justify-start mb-8 md:mb-0 md:flex-shrink-0">
-            <div className="w-[170px] h-[81px] relative">
-              {/* ロゴマーク部分 */}
-              <div className="absolute left-0 top-0">
+            <div className="w-64 h-[81px] flex items-center justify-center">
+              <div className="flex items-center gap-[11.68px]">
+                {/* ロゴマーク部分 */}
                 <img
                   src="/images/dd2030-logomark.svg"
                   alt="デジタル民主主義2030 ロゴマーク"
                   className="w-[75px] h-[81px]"
                 />
-              </div>
-              {/* ロゴタイプ部分 */}
-              <div className="absolute left-[86.68px] top-[3.68px]">
+                {/* ロゴタイプ部分 */}
                 <img
                   src="/images/dd2030-logotype.svg"
                   alt="デジタル民主主義2030"

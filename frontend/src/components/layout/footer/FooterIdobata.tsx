@@ -16,17 +16,19 @@ const FooterIdobata = () => {
           <div className="flex flex-col md:flex-row md:items-center md:gap-8">
             {/* ロゴとタイトルエリア */}
             <div className="flex justify-center md:justify-start mb-8 md:mb-0 md:flex-shrink-0">
-              <div className="flex items-center gap-3 md:w-64">
-                {/* ロゴエリア */}
-                <img
-                  src="/images/idobata-logo.svg"
-                  alt="いどばたビジョン"
-                  className="w-[68px] h-[68px] object-contain"
-                />
-                {/* タイトル */}
-                <h2 className="text-[32px] font-bold leading-[1.28] tracking-[0.03281em] text-[#94B9F9] whitespace-pre-line mr-4">
-                  {"いどばた\nビジョン"}
-                </h2>
+              <div className="w-64 h-[68px] flex items-center justify-center">
+                <div className="flex items-center gap-3">
+                  {/* ロゴエリア */}
+                  <img
+                    src="/images/idobata-logo.svg"
+                    alt="いどばたビジョン"
+                    className="w-[68px] h-[68px] object-contain"
+                  />
+                  {/* タイトル */}
+                  <h2 className="text-[32px] font-bold leading-[1.28] tracking-[0.03281em] text-[#94B9F9] whitespace-pre-line">
+                    {"いどばた\nビジョン"}
+                  </h2>
+                </div>
               </div>
             </div>
 
@@ -43,7 +45,7 @@ const FooterIdobata = () => {
               </ProjectDescriptionText>
 
               {/* ボタンエリア */}
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-3 justify-center md:justify-start">
                 <FooterButton asChild>
                   <a
                     href="https://dd2030.org/idobata"
