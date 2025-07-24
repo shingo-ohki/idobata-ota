@@ -4,7 +4,7 @@ import { ArrowUpRight, Github, Slack } from "lucide-react";
 const FooterDd2030 = () => {
   return (
     <div className="w-full bg-[#F1F6F8] px-6 py-6 md:py-10">
-      <div className="w-full bg-white rounded-3xl md:rounded-[32px] p-8 md:p-8">
+      <div className="w-full max-w-[1024px] mx-auto bg-white rounded-3xl md:rounded-[32px] p-8 md:p-8">
         <div className="flex flex-col md:flex-row md:items-center md:gap-8">
           {/* ロゴエリア */}
           <div className="flex justify-center md:justify-start mb-8 md:mb-0 md:flex-shrink-0">

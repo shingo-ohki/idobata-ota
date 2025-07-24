@@ -12,7 +12,7 @@ const FooterIdobata = () => {
       <div className="relative">
         {/* SP版レイアウト */}
         <div className="block md:hidden px-6 py-6">
-          <div className="w-full bg-white rounded-3xl p-8">
+          <div className="w-full max-w-[1024px] mx-auto bg-white rounded-3xl p-8">
             {/* ロゴとタイトルエリア */}
             <div className="flex flex-col items-center gap-8 mb-8">
               <div className="flex items-center justify-center gap-3">
@@ -54,7 +54,7 @@ const FooterIdobata = () => {
 
         {/* PC版レイアウト */}
         <div className="hidden md:block py-10">
-          <div className="w-full bg-white rounded-[32px] p-8">
+          <div className="w-full max-w-[1024px] mx-auto bg-white rounded-[32px] p-8">
             <div className="flex items-center gap-8">
               {/* ロゴとタイトルエリア */}
               <div className="flex items-center justify-center gap-3 w-64">
