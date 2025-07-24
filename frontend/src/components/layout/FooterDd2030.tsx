@@ -40,7 +40,7 @@ const FooterDd2030 = () => {
               {/* プロジェクトサイトボタン */}
               <FooterButton asChild>
                 <a
-                  href="https://digital-democracy-2030.org"
+                  href="https://dd2030.org/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2"
@@ -53,7 +53,7 @@ const FooterDd2030 = () => {
               {/* Xボタン */}
               <FooterButton asChild>
                 <a
-                  href="https://twitter.com/dd2030_jp"
+                  href="https://x.com/dd2030jp"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center"
@@ -85,7 +85,7 @@ const FooterDd2030 = () => {
               {/* Slackボタン */}
               <FooterButton asChild>
                 <a
-                  href="https://dd2030.slack.com"
+                  href="https://join.slack.com/t/dd2030/shared_invite/zt-35bjj11ms-OQtx4Lu08LJ4OqWiRAgNrA"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2"
@@ -98,7 +98,7 @@ const FooterDd2030 = () => {
               {/* GitHubボタン */}
               <FooterButton asChild>
                 <a
-                  href="https://github.com/dd2030"
+                  href="https://github.com/digitaldemocracy2030"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2"
