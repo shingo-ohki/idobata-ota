@@ -14,14 +14,17 @@ interface ProjectDescriptionTextProps {
  * - 文字間隔: 2.5% (0.025em)
  * - 配置: 両端揃え（モバイル）/ 左揃え（デスクトップ）
  */
-export const ProjectDescriptionText = ({ children, className }: ProjectDescriptionTextProps) => {
+export const ProjectDescriptionText = ({
+  children,
+  className,
+}: ProjectDescriptionTextProps) => {
   return (
     <p
       className={cn(
         "text-xs leading-[2em] tracking-[0.025em] text-justify md:text-left",
         className
       )}
-      style={{ fontFamily: 'BIZ UDPGothic' }}
+      style={{ fontFamily: "BIZ UDPGothic" }}
     >
       {children}
     </p>

@@ -1,6 +1,6 @@
-import FooterIdobata from "./FooterIdobata";
 import FooterDd2030 from "./FooterDd2030";
 import FooterGeneral from "./FooterGeneral";
+import FooterIdobata from "./FooterIdobata";
 
 const Footer = () => {
   return (

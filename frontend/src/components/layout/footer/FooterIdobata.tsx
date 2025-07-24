@@ -1,6 +1,6 @@
+import { ArrowUpRight } from "lucide-react";
 import { FooterButton } from "../../ui/footer-button";
 import { ProjectDescriptionText } from "../../ui/project-description-text";
-import { ArrowUpRight } from "lucide-react";
 
 const FooterIdobata = () => {
   return (

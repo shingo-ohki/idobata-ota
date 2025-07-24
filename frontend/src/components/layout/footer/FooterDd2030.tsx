@@ -1,6 +1,6 @@
+import { ArrowUpRight, Github, Slack } from "lucide-react";
 import { FooterButton } from "../../ui/footer-button";
 import { ProjectDescriptionText } from "../../ui/project-description-text";
-import { ArrowUpRight, Github, Slack } from "lucide-react";
 
 const FooterDd2030 = () => {
   return (

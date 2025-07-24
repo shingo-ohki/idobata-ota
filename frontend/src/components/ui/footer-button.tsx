@@ -1,9 +1,9 @@
-import { Button } from "./button";
-import { ButtonProps } from "./button";
 import { forwardRef } from "react";
 import { cn } from "../../lib/utils";
+import { Button } from "./button";
+import { ButtonProps } from "./button";
 
-interface FooterButtonProps extends Omit<ButtonProps, 'variant' | 'size'> {
+interface FooterButtonProps extends Omit<ButtonProps, "variant" | "size"> {
   children: React.ReactNode;
 }
 
