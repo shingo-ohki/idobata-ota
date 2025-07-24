@@ -1,4 +1,4 @@
-import { Button } from "../ui/button";
+import { FooterButton } from "../ui/footer-button";
 import { ArrowUpRight, Github, Slack } from "lucide-react";
 
 const FooterDd2030 = () => {
@@ -38,12 +38,7 @@ const FooterDd2030 = () => {
             {/* ボタンエリア */}
             <div className="flex flex-wrap gap-3">
               {/* プロジェクトサイトボタン */}
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-8 px-5 rounded-full border-[#27272A] bg-white hover:bg-gray-50 text-[#27272A] text-xs font-bold tracking-[0.025em]"
-                asChild
-              >
+              <FooterButton asChild>
                 <a
                   href="https://digital-democracy-2030.org"
                   target="_blank"
@@ -53,15 +48,10 @@ const FooterDd2030 = () => {
                   プロジェクトサイト
                   <ArrowUpRight className="w-4 h-4" />
                 </a>
-              </Button>
+              </FooterButton>
 
               {/* Xボタン */}
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-8 px-5 rounded-full border-[#27272A] bg-white hover:bg-gray-50"
-                asChild
-              >
+              <FooterButton asChild>
                 <a
                   href="https://twitter.com/dd2030_jp"
                   target="_blank"
@@ -74,15 +64,10 @@ const FooterDd2030 = () => {
                     className="w-3 h-3"
                   />
                 </a>
-              </Button>
+              </FooterButton>
 
               {/* noteボタン */}
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-8 px-5 rounded-full border-[#27272A] bg-white hover:bg-gray-50"
-                asChild
-              >
+              <FooterButton asChild>
                 <a
                   href="https://note.com/dd2030"
                   target="_blank"
@@ -95,15 +80,10 @@ const FooterDd2030 = () => {
                     className="w-10 h-2"
                   />
                 </a>
-              </Button>
+              </FooterButton>
 
               {/* Slackボタン */}
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-8 px-5 rounded-full border-[#27272A] bg-white hover:bg-gray-50 text-[#27272A] text-xs font-bold tracking-[0.025em]"
-                asChild
-              >
+              <FooterButton asChild>
                 <a
                   href="https://dd2030.slack.com"
                   target="_blank"
@@ -113,15 +93,10 @@ const FooterDd2030 = () => {
                   <Slack className="w-4 h-4" />
                   slack
                 </a>
-              </Button>
+              </FooterButton>
 
               {/* GitHubボタン */}
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-8 px-5 rounded-full border-[#27272A] bg-white hover:bg-gray-50 text-[#27272A] text-xs font-bold tracking-[0.025em]"
-                asChild
-              >
+              <FooterButton asChild>
                 <a
                   href="https://github.com/dd2030"
                   target="_blank"
@@ -131,7 +106,7 @@ const FooterDd2030 = () => {
                   <Github className="w-4 h-4" />
                   GitHub
                 </a>
-              </Button>
+              </FooterButton>
             </div>
           </div>
         </div>

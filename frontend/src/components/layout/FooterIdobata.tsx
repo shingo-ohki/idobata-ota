@@ -1,4 +1,4 @@
-import { Button } from "../ui/button";
+import { FooterButton } from "../ui/footer-button";
 import { ArrowUpRight } from "lucide-react";
 
 const FooterIdobata = () => {
@@ -38,23 +38,15 @@ const FooterIdobata = () => {
 
               {/* ボタンエリア */}
               <div className="flex gap-3">
-                <a href="https://dd2030.org/idobata" target="_blank" rel="noopener noreferrer">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-8 px-5 rounded-full border-[#27272A] text-xs font-bold leading-8 tracking-[0.025em] text-[#27272A] bg-white hover:bg-gray-50"
-                  >
+                <FooterButton asChild>
+                  <a href="https://dd2030.org/idobata" target="_blank" rel="noopener noreferrer" className="flex items-center">
                     いどばたについて
                     <ArrowUpRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </a>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-8 px-5 rounded-full border-[#27272A] text-xs font-bold leading-8 tracking-[0.025em] text-[#27272A] bg-white hover:bg-gray-50"
-                >
+                  </a>
+                </FooterButton>
+                <FooterButton>
                   謝辞
-                </Button>
+                </FooterButton>
               </div>
             </div>
           </div>
@@ -89,23 +81,15 @@ const FooterIdobata = () => {
 
                 {/* ボタンエリア */}
                 <div className="flex gap-3">
-                  <a href="https://dd2030.org/idobata" target="_blank" rel="noopener noreferrer">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="h-8 px-5 rounded-full border-[#27272A] text-xs font-bold leading-8 tracking-[0.025em] text-[#27272A] bg-white hover:bg-gray-50"
-                    >
+                  <FooterButton asChild>
+                    <a href="https://dd2030.org/idobata" target="_blank" rel="noopener noreferrer" className="flex items-center">
                       いどばたについて
                       <ArrowUpRight className="w-4 h-4 ml-2" />
-                    </Button>
-                  </a>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-8 px-5 rounded-full border-[#27272A] text-xs font-bold leading-8 tracking-[0.025em] text-[#27272A] bg-white hover:bg-gray-50"
-                  >
+                    </a>
+                  </FooterButton>
+                  <FooterButton>
                     謝辞
-                  </Button>
+                  </FooterButton>
                 </div>
               </div>
             </div>
