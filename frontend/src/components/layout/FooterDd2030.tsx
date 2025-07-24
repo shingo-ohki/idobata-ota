@@ -1,5 +1,5 @@
 import { Button } from "../ui/button";
-import { ExternalLink, Github, MessageCircle, Slack, Twitter } from "lucide-react";
+import { ArrowUpRight, Github, Slack } from "lucide-react";
 
 const FooterDd2030 = () => {
   return (
@@ -51,15 +51,15 @@ const FooterDd2030 = () => {
                   className="flex items-center gap-2"
                 >
                   プロジェクトサイト
-                  <ExternalLink className="w-4 h-4" />
+                  <ArrowUpRight className="w-4 h-4" />
                 </a>
               </Button>
 
-              {/* Twitterボタン */}
+              {/* Xボタン */}
               <Button
                 variant="outline"
                 size="sm"
-                className="h-8 w-8 p-0 rounded-full border-[#27272A] bg-white hover:bg-gray-50"
+                className="h-8 px-5 rounded-full border-[#27272A] bg-white hover:bg-gray-50"
                 asChild
               >
                 <a
@@ -68,24 +68,32 @@ const FooterDd2030 = () => {
                   rel="noopener noreferrer"
                   className="flex items-center justify-center"
                 >
-                  <Twitter className="w-4 h-4 text-[#27272A]" />
+                  <img
+                    src="/images/x-icon.svg"
+                    alt="X (Twitter)"
+                    className="w-3 h-3"
+                  />
                 </a>
               </Button>
 
-              {/* Discordボタン */}
+              {/* noteボタン */}
               <Button
                 variant="outline"
                 size="sm"
-                className="h-8 w-8 p-0 rounded-full border-[#27272A] bg-white hover:bg-gray-50"
+                className="h-8 px-5 rounded-full border-[#27272A] bg-white hover:bg-gray-50"
                 asChild
               >
                 <a
-                  href="https://discord.gg/dd2030"
+                  href="https://note.com/dd2030"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center"
                 >
-                  <MessageCircle className="w-4 h-4 text-[#27272A]" />
+                  <img
+                    src="/images/note-icon.svg"
+                    alt="note"
+                    className="w-10 h-2"
+                  />
                 </a>
               </Button>
 
