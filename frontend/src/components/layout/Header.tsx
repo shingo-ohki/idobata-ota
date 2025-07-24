@@ -27,7 +27,7 @@ const NAV_ITEMS = [
     to: "/about",
   },
   {
-    label: "使いかた",
+    label: "使いかた(未！)",
     icon: BookOpen,
     to: "/howto",
   },
@@ -43,13 +43,18 @@ const Header: React.FC = () => {
   const { siteConfig, loading } = useSiteConfig();
 
   return (
-    <header className="w-full border-b-2 border-[#2D80FF] bg-white">
+    <header className="sticky top-0 z-50 w-full border-b-2 border-[#2D80FF] bg-white">
       <div className="flex items-center justify-between px-6 py-5 md:px-10 md:py-4">
         {/* 左側：タイトル・ロゴエリア */}
         <div className="flex flex-col md:flex-row md:items-end gap-1 md:gap-3">
-          <span className="font-bold text-lg md:text-xl tracking-wider text-[#27272A] leading-none">
-            {loading ? "..." : siteConfig?.title || "りっけん対話アリーナ"}
-          </span>
+          <Link
+            to="/top"
+            className="font-bold text-lg md:text-xl tracking-wider text-[#27272A] leading-none hover:text-[#2D80FF] transition-colors cursor-pointer"
+          >
+            {loading
+              ? "..."
+              : siteConfig?.title || "XX党みんなの政策フォーラム"}
+          </Link>
           <div className="flex items-center gap-1">
             <span className="text-[8px] font-bold text-[#94B9F9] leading-[2em] tracking-[0.0375em]">
               powered by
