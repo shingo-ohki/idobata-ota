@@ -1,5 +1,5 @@
-import { Button } from "../ui/button";
-import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { Button } from "../../ui/button";
+import { useMediaQuery } from "../../../hooks/useMediaQuery";
 
 const FooterGeneral = () => {
   const isDesktop = useMediaQuery("(min-width: 768px)");

@@ -1,5 +1,5 @@
-import { FooterButton } from "../ui/footer-button";
-import { ProjectDescriptionText } from "../ui/project-description-text";
+import { FooterButton } from "../../ui/footer-button";
+import { ProjectDescriptionText } from "../../ui/project-description-text";
 import { ArrowUpRight } from "lucide-react";
 
 const FooterIdobata = () => {
@@ -54,9 +54,6 @@ const FooterIdobata = () => {
                     いどばたについて
                     <ArrowUpRight className="w-4 h-4" />
                   </a>
-                </FooterButton>
-                <FooterButton>
-                  謝辞(未！)
                 </FooterButton>
               </div>
             </div>
