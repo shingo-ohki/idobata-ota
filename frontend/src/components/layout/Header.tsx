@@ -72,7 +72,7 @@ const Header: React.FC = () => {
                 location.pathname === to ? "text-[#27272A]" : "text-[#27272A]"
               }`}
             >
-              <Icon className="w-5 h-5 text-[#60A5FA] group-hover:text-[#60A5FA] transition-colors stroke-[1.67]" />
+              <Icon className="w-5 h-5 text-[#60A5FA] group-hover:text-[#60A5FA] stroke-[1.67]" />
               <span className="text-[10px] font-bold tracking-wider text-[#27272A]">
                 {label}
               </span>
@@ -114,7 +114,7 @@ const Header: React.FC = () => {
                   <SheetClose key={label} asChild>
                     <Link
                       to={to}
-                      className="flex items-center gap-3 text-base font-bold tracking-[0.025em] text-[#27272A] hover:text-[#2D80FF] transition-colors leading-8"
+                      className="flex items-center gap-3 text-base font-bold tracking-[0.025em] text-[#27272A] hover:text-[#2D80FF] leading-8"
                     >
                       <Icon className="w-8 h-8 stroke-2 text-[#60A5FA]" />
                       {label}
