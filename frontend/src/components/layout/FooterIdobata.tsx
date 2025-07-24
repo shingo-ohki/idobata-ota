@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 
 const FooterIdobata = () => {
   return (
-    <div className="w-full relative">
+    <div className="w-full relative rounded-t-3xl overflow-hidden">
       {/* グラデーション背景 */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#94B9F9] to-[#9CE0E5]" />
       {/* 白い半透明オーバーレイ */}
@@ -23,7 +23,7 @@ const FooterIdobata = () => {
                   className="w-[68px] h-[68px] object-contain"
                 />
                 {/* タイトル */}
-                <h2 className="text-[32px] font-bold leading-[1.28] tracking-[0.03281em] text-[#94B9F9] whitespace-pre-line">
+                <h2 className="text-[32px] font-bold leading-[1.28] tracking-[0.03281em] text-[#94B9F9] whitespace-pre-line mr-4">
                   {"いどばた\nビジョン"}
                 </h2>
               </div>
@@ -71,7 +71,7 @@ const FooterIdobata = () => {
                   className="w-[68px] h-[68px] object-contain"
                 />
                 {/* タイトル */}
-                <h2 className="text-[32px] font-bold leading-[1.28] tracking-[0.03281em] text-[#94B9F9] whitespace-pre-line">
+                <h2 className="text-[32px] font-bold leading-[1.28] tracking-[0.03281em] text-[#94B9F9] whitespace-pre-line mr-4">
                   {"いどばた\nビジョン"}
                 </h2>
               </div>
