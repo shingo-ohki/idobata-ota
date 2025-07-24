@@ -1,4 +1,11 @@
-import { BookOpen, HeartHandshake, Home, Menu, UserRound, X } from "lucide-react";
+import {
+  BookOpen,
+  HeartHandshake,
+  Home,
+  Menu,
+  UserRound,
+  X,
+} from "lucide-react";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSiteConfig } from "../../contexts/SiteConfigContext";
@@ -94,7 +101,7 @@ const Header: React.FC = () => {
             <SheetContent
               side="right"
               className="w-[262.5px] p-0 bg-white"
-              style={{ width: '262.5px' }}
+              style={{ width: "262.5px" }}
             >
               {/* ✕ボタン */}
               <div className="flex justify-end p-6 pb-0">
