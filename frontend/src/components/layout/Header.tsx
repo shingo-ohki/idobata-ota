@@ -51,7 +51,9 @@ const Header: React.FC = () => {
             to="/top"
             className="font-bold text-lg md:text-xl tracking-wider text-[#27272A] leading-none hover:text-[#2D80FF] transition-colors cursor-pointer"
           >
-            {loading ? "..." : siteConfig?.title || "XX党みんなの政策フォーラム"}
+            {loading
+              ? "..."
+              : siteConfig?.title || "XX党みんなの政策フォーラム"}
           </Link>
           <div className="flex items-center gap-1">
             <span className="text-[8px] font-bold text-[#94B9F9] leading-[2em] tracking-[0.0375em]">
