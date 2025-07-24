@@ -42,14 +42,14 @@ const FooterGeneral = () => {
               className="h-8 px-5 rounded-full text-xs font-bold leading-6 tracking-[0.025em] text-zinc-800 hover:bg-accent hover:text-accent-foreground"
               style={{ fontFamily: 'BIZ UDPGothic' }}
             >
-              利用規約
+              利用規約（未！）
             </Button>
             <Button
               variant="ghost"
               className="h-8 px-5 rounded-full text-xs font-bold leading-6 tracking-[0.025em] text-zinc-800 hover:bg-accent hover:text-accent-foreground"
               style={{ fontFamily: 'BIZ UDPGothic' }}
             >
-              免責
+              免責（未！）
             </Button>
           </div>
 

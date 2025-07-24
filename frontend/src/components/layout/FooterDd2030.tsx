@@ -1,4 +1,5 @@
 import { FooterButton } from "../ui/footer-button";
+import { ProjectDescriptionText } from "../ui/project-description-text";
 import { ArrowUpRight, Github, Slack } from "lucide-react";
 
 const FooterDd2030 = () => {
@@ -31,9 +32,9 @@ const FooterDd2030 = () => {
           {/* 情報エリア */}
           <div className="flex-1 space-y-4">
             {/* 説明テキスト */}
-            <p className="text-[#27272A] text-xs leading-[2em] tracking-[0.025em] text-justify md:text-left">
+            <ProjectDescriptionText className="text-[#27272A]">
               2030年には、情報技術により民主主義のあり方はアップデートされており、一人ひとりの声が政治・行政に届き、適切に合意形成・政策反映されていくような社会が当たり前になる、──そんな未来を目指して立ち上げられたのがデジタル民主主義2030プロジェクトです。
-            </p>
+            </ProjectDescriptionText>
 
             {/* ボタンエリア */}
             <div className="flex flex-wrap gap-3">

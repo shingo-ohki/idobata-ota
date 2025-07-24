@@ -1,4 +1,5 @@
 import { FooterButton } from "../ui/footer-button";
+import { ProjectDescriptionText } from "../ui/project-description-text";
 import { ArrowUpRight } from "lucide-react";
 
 const FooterIdobata = () => {
@@ -8,14 +9,14 @@ const FooterIdobata = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-[#94B9F9] to-[#9CE0E5]" />
       {/* 白い半透明オーバーレイ */}
       <div className="absolute inset-0 bg-white/50" />
+
       {/* コンテンツ */}
-      <div className="relative">
-        {/* SP版レイアウト */}
-        <div className="block md:hidden px-6 py-6">
-          <div className="w-full max-w-[1024px] mx-auto bg-white rounded-3xl p-8">
+      <div className="relative px-6 py-6 md:py-10">
+        <div className="w-full max-w-[1024px] mx-auto bg-white rounded-3xl md:rounded-[32px] p-8">
+          <div className="flex flex-col md:flex-row md:items-center md:gap-8">
             {/* ロゴとタイトルエリア */}
-            <div className="flex flex-col items-center gap-8 mb-8">
-              <div className="flex items-center justify-center gap-3">
+            <div className="flex justify-center md:justify-start mb-8 md:mb-0 md:flex-shrink-0">
+              <div className="flex items-center gap-3 md:w-64">
                 {/* ロゴエリア */}
                 <img
                   src="/images/idobata-logo.svg"
@@ -30,67 +31,33 @@ const FooterIdobata = () => {
             </div>
 
             {/* 情報エリア */}
-            <div className="flex flex-col gap-4">
+            <div className="flex-1 space-y-4">
               {/* テキスト */}
-              <p className="text-xs leading-[2em] tracking-[0.025em] text-zinc-800 text-justify">
-                いどばたビジョンは、デジタル民主主義2030プロジェクトから生まれたオープンソース（OSS）アプリケーションです。本ページは、そのOSS成果物を活用して構築されています。
-              </p>
+              <ProjectDescriptionText className="text-zinc-800">
+                いどばたビジョンは、デジタル民主主義2030プロジェクトから生まれたオープンソース（OSS）アプリケーションです。
+                <span className="hidden md:inline">
+                  <br />
+                </span>
+                <span className="md:hidden"> </span>
+                本ページは、そのOSS成果物を活用して構築されています。
+              </ProjectDescriptionText>
 
               {/* ボタンエリア */}
-              <div className="flex gap-3">
+              <div className="flex flex-wrap gap-3">
                 <FooterButton asChild>
-                  <a href="https://dd2030.org/idobata" target="_blank" rel="noopener noreferrer" className="flex items-center">
+                  <a
+                    href="https://dd2030.org/idobata"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2"
+                  >
                     いどばたについて
-                    <ArrowUpRight className="w-4 h-4 ml-2" />
+                    <ArrowUpRight className="w-4 h-4" />
                   </a>
                 </FooterButton>
                 <FooterButton>
-                  謝辞
+                  謝辞(未！)
                 </FooterButton>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* PC版レイアウト */}
-        <div className="hidden md:block py-10">
-          <div className="w-full max-w-[1024px] mx-auto bg-white rounded-[32px] p-8">
-            <div className="flex items-center gap-8">
-              {/* ロゴとタイトルエリア */}
-              <div className="flex items-center justify-center gap-3 w-64">
-                {/* ロゴエリア */}
-                <img
-                  src="/images/idobata-logo.svg"
-                  alt="いどばたビジョン"
-                  className="w-[68px] h-[68px] object-contain"
-                />
-                {/* タイトル */}
-                <h2 className="text-[32px] font-bold leading-[1.28] tracking-[0.03281em] text-[#94B9F9] whitespace-pre-line mr-4">
-                  {"いどばた\nビジョン"}
-                </h2>
-              </div>
-
-              {/* 情報エリア */}
-              <div className="flex-1 flex flex-col justify-center gap-4">
-                {/* テキスト */}
-                <p className="text-xs leading-[2em] tracking-[0.025em] text-zinc-800 text-justify">
-                  いどばたビジョンは、デジタル民主主義2030プロジェクトから生まれたオープンソース（OSS）アプリケーションです。
-                  <br />
-                  本ページは、そのOSS成果物を活用して構築されています。
-                </p>
-
-                {/* ボタンエリア */}
-                <div className="flex gap-3">
-                  <FooterButton asChild>
-                    <a href="https://dd2030.org/idobata" target="_blank" rel="noopener noreferrer" className="flex items-center">
-                      いどばたについて
-                      <ArrowUpRight className="w-4 h-4 ml-2" />
-                    </a>
-                  </FooterButton>
-                  <FooterButton>
-                    謝辞
-                  </FooterButton>
-                </div>
               </div>
             </div>
           </div>
