@@ -38,14 +38,16 @@ const FooterIdobata = () => {
 
               {/* ボタンエリア */}
               <div className="flex gap-3">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-8 px-5 rounded-full border-[#27272A] text-xs font-bold leading-8 tracking-[0.025em] text-[#27272A] bg-white hover:bg-gray-50"
-                >
-                  いどばたについて
-                  <ArrowUpRight className="w-4 h-4 ml-2" />
-                </Button>
+                <a href="https://dd2030.org/idobata" target="_blank" rel="noopener noreferrer">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-8 px-5 rounded-full border-[#27272A] text-xs font-bold leading-8 tracking-[0.025em] text-[#27272A] bg-white hover:bg-gray-50"
+                  >
+                    いどばたについて
+                    <ArrowUpRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </a>
                 <Button
                   variant="outline"
                   size="sm"
@@ -87,14 +89,16 @@ const FooterIdobata = () => {
 
                 {/* ボタンエリア */}
                 <div className="flex gap-3">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-8 px-5 rounded-full border-[#27272A] text-xs font-bold leading-8 tracking-[0.025em] text-[#27272A] bg-white hover:bg-gray-50"
-                  >
-                    いどばたについて
-                    <ArrowUpRight className="w-4 h-4 ml-2" />
-                  </Button>
+                  <a href="https://dd2030.org/idobata" target="_blank" rel="noopener noreferrer">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-8 px-5 rounded-full border-[#27272A] text-xs font-bold leading-8 tracking-[0.025em] text-[#27272A] bg-white hover:bg-gray-50"
+                    >
+                      いどばたについて
+                      <ArrowUpRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </a>
                   <Button
                     variant="outline"
                     size="sm"
