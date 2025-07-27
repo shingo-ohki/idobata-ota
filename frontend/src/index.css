@@ -1,12 +1,14 @@
 /* Import Inter and BIZ UDGothic fonts from Google Fonts */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=BIZ+UDGothic:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=BIZ+UDGothic:wght@400;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap");
 
 @tailwind base;
 
-/* Apply Inter for English and BIZ UDGothic for Japanese */
+/* Apply Inter for English and Noto Sans JP for Japanese */
 @layer base {
   html {
-    font-family: "Inter", "BIZ UDGothic", system-ui, sans-serif;
+    font-family: "Inter", "Noto Sans JP", "BIZ UDGothic", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
@@ -144,6 +146,26 @@
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.2);
+}
+
+/* Hide scrollbar for horizontal scroll */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Card hover effects */
+.card-hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 /* ===== Custom UI Components ===== */

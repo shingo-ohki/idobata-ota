@@ -1,9 +1,10 @@
 import { cva } from "class-variance-authority";
 import * as React from "react";
 import { cn } from "../../lib/utils";
+import { ChevronUp, ChevronDown } from "lucide-react";
 
 const selectVariants = cva(
-  "flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none",
+  "flex w-full rounded-md border border-input bg-background pl-3 pr-10 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none [&::-ms-expand]:hidden",
   {
     variants: {
       size: {
@@ -74,19 +75,28 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             {requiredMark && <span className="text-destructive">*</span>}
           </label>
         )}
-        <select
-          id={selectId}
-          className={cn(selectVariants({ size, error, disabled, className }))}
-          ref={ref}
-          disabled={disabled}
-          {...props}
-        >
-          {options.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
+        <div className="relative">
+          <select
+            id={selectId}
+            className={cn(selectVariants({ size, error, disabled, className }))}
+            ref={ref}
+            disabled={disabled}
+            {...props}
+          >
+            {options.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+          {/* Custom dropdown icon */}
+          <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+            <div className="flex flex-col">
+              <ChevronUp className="h-3 w-3 text-blue-500" />
+              <ChevronDown className="h-3 w-3 text-blue-500 -mt-1" />
+            </div>
+          </div>
+        </div>
         {helperText && (
           <span className="text-xs text-muted-foreground">{helperText}</span>
         )}

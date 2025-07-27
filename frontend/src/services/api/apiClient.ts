@@ -2,6 +2,7 @@ import { err, ok } from "neverthrow";
 import type { QuestionDetailResponse } from "../../hooks/useQuestionDetail";
 import type {
   DigestDraft,
+  Opinion,
   PolicyDraft,
   Problem,
   Question,
@@ -367,12 +368,14 @@ export class ApiClient {
     HttpResult<{
       latestThemes: Theme[];
       latestQuestions: Question[];
+      latestOpinions: Opinion[];
     }>
   > {
     return this.withRetry(() =>
       this.httpClient.get<{
         latestThemes: Theme[];
         latestQuestions: Question[];
+        latestOpinions: Opinion[];
       }>("/top-page-data")
     );
   }
