@@ -20,7 +20,7 @@ const HeroSection = ({ latestQuestions = [] }: HeroSectionProps) => {
   const handleStartDialogue = () => {
     if (selectedQuestion) {
       const question = latestQuestions.find((q) => q._id === selectedQuestion);
-      if (question && question.themeId) {
+      if (question?.themeId) {
         navigate(`/themes/${question.themeId}/questions/${selectedQuestion}`);
       }
     }
@@ -29,7 +29,7 @@ const HeroSection = ({ latestQuestions = [] }: HeroSectionProps) => {
   // Format options for the select dropdown
   const questionOptions = latestQuestions.map((q) => ({
     value: q._id,
-    label: q.tagLine || q.questionText.substring(0, 50) + "...",
+    label: q.tagLine || `${q.questionText.substring(0, 50)}...`,
   }));
 
   return (
@@ -55,7 +55,9 @@ const HeroSection = ({ latestQuestions = [] }: HeroSectionProps) => {
         <svg
           className="hidden md:block absolute bottom-8 right-1/4 w-20 h-8"
           viewBox="0 0 73 28"
+          aria-label="右下の矢印"
           fill="none"
+          role="img"
         >
           <path
             d="M28.512 8.008C32.074 10.383 32.074 15.617 28.512 17.992L9.328 30.781C5.341 33.439 0 30.581 0 25.789L0 0.211C0 -4.581 5.341 -7.439 9.328 -4.781L28.512 8.008Z"
@@ -73,6 +75,8 @@ const HeroSection = ({ latestQuestions = [] }: HeroSectionProps) => {
           className="hidden md:block absolute top-16 left-1/4 w-20 h-8"
           viewBox="0 0 73 28"
           fill="none"
+          aria-label="左上の矢印"
+          role="img"
         >
           <path
             d="M28.512 8.008C32.074 10.383 32.074 15.617 28.512 17.992L9.328 30.781C5.341 33.439 0 30.581 0 25.789L0 0.211C0 -4.581 5.341 -7.439 9.328 -4.781L28.512 8.008Z"

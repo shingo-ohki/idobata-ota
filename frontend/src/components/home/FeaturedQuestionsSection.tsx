@@ -81,6 +81,7 @@ const FeaturedQuestionsSection = ({
           {canScrollLeft && (
             <button
               onClick={() => scroll("left")}
+              type="button"
               className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 bg-white rounded-full shadow-lg p-2 hover:shadow-xl transition-shadow"
             >
               <ChevronLeft className="h-6 w-6 text-gray-600" />
@@ -90,6 +91,7 @@ const FeaturedQuestionsSection = ({
           {canScrollRight && (
             <button
               onClick={() => scroll("right")}
+              type="button"
               className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 bg-white rounded-full shadow-lg p-2 hover:shadow-xl transition-shadow"
             >
               <ChevronRight className="h-6 w-6 text-gray-600" />
@@ -130,9 +132,9 @@ const FeaturedQuestionsSection = ({
                         <div className="p-0">
                           {question.tags && question.tags.length > 0 && (
                             <div className="flex gap-1 mb-3">
-                              {question.tags.map((tag, tagIndex) => (
+                              {question.tags.map((tag) => (
                                 <span
-                                  key={tagIndex}
+                                  key={`tag-${tag}`}
                                   className="inline-block px-2 py-1 rounded-full text-xs text-gray-400 border border-gray-400 font-medium"
                                 >
                                   {tag}
@@ -160,8 +162,10 @@ const FeaturedQuestionsSection = ({
                             <svg
                               className="w-4 h-4 text-blue-600"
                               fill="none"
+                              aria-label="詳細を見る"
                               stroke="currentColor"
                               viewBox="0 0 24 24"
+                              role="img"
                             >
                               <path
                                 strokeLinecap="round"

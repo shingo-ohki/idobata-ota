@@ -29,15 +29,15 @@ const OpinionCard = ({
         (now.getTime() - d.getTime()) / (1000 * 60)
       );
       return `${diffInMinutes}分前`;
-    } else if (diffInHours < 24) {
-      return `${Math.floor(diffInHours)}時間前`;
-    } else {
-      return d.toLocaleDateString("ja-JP", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      });
     }
+    if (diffInHours < 24) {
+      return `${Math.floor(diffInHours)}時間前`;
+    }
+    return d.toLocaleDateString("ja-JP", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
   };
 
   return (

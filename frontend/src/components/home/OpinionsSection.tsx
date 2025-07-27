@@ -68,6 +68,7 @@ const OpinionsSection = ({ opinions }: OpinionsSectionProps) => {
           {canScrollLeft && (
             <button
               onClick={() => scroll("left")}
+              type="button"
               className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 bg-white rounded-full shadow-lg p-2 hover:shadow-xl transition-shadow"
             >
               <ChevronLeft className="h-6 w-6 text-gray-600" />
@@ -78,6 +79,7 @@ const OpinionsSection = ({ opinions }: OpinionsSectionProps) => {
           {canScrollRight && (
             <button
               onClick={() => scroll("right")}
+              type="button"
               className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 bg-white rounded-full shadow-lg p-2 hover:shadow-xl transition-shadow"
             >
               <ChevronRight className="h-6 w-6 text-gray-600" />

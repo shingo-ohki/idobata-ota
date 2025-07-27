@@ -30,7 +30,7 @@ const TopPageTemplate = ({
     .map((q) => ({
       id: q._id,
       title: q.questionText,
-      description: q.tagLine || q.questionText.substring(0, 100) + "...",
+      description: q.tagLine || `${q.questionText.substring(0, 100)}...`,
       participantCount: q.uniqueParticipantCount || 0,
       commentCount: q.issueCount || 0 + (q.solutionCount || 0),
       likeCount: q.likeCount || 0,
@@ -70,7 +70,7 @@ const TopPageTemplate = ({
           lastUpdated: q.createdAt || new Date().toISOString(),
           themeId: q.themeId,
           tagLine: q.tagLine,
-          description: q.tagLine || q.questionText.substring(0, 100) + "...",
+          description: q.tagLine || `${q.questionText.substring(0, 100)}...`,
           participantCount: q.uniqueParticipantCount || 0,
           commentCount: q.issueCount || 0 + (q.solutionCount || 0),
         }))}

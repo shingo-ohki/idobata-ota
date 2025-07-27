@@ -74,9 +74,11 @@ const QuestionsTable = ({ questions }: QuestionsTableProps) => {
                         </div>
                         <svg
                           className="w-4 h-4 text-blue-600"
+                          aria-label="詳細を見る"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
+                          role="img"
                         >
                           <path
                             strokeLinecap="round"
