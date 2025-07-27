@@ -1,10 +1,10 @@
 import ChatThread from "../models/ChatThread.js";
 import Like from "../models/Like.js";
+import Problem from "../models/Problem.js";
 import QuestionLink from "../models/QuestionLink.js";
 import SharpQuestion from "../models/SharpQuestion.js";
-import Theme from "../models/Theme.js";
-import Problem from "../models/Problem.js";
 import Solution from "../models/Solution.js";
+import Theme from "../models/Theme.js";
 import User from "../models/User.js";
 
 /**
@@ -26,18 +26,20 @@ export const getTopPageData = async (req, res) => {
     const latestProblems = await Problem.find()
       .sort({ createdAt: -1 })
       .limit(15)
-      .populate('themeId');
+      .populate("themeId");
 
     const latestSolutions = await Solution.find()
       .sort({ createdAt: -1 })
       .limit(15)
-      .populate('themeId');
+      .populate("themeId");
 
     // Combine and sort opinions by creation date
     const allOpinions = [
-      ...latestProblems.map(p => ({ ...p.toObject(), type: 'problem' })),
-      ...latestSolutions.map(s => ({ ...s.toObject(), type: 'solution' }))
-    ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 15);
+      ...latestProblems.map((p) => ({ ...p.toObject(), type: "problem" })),
+      ...latestSolutions.map((s) => ({ ...s.toObject(), type: "solution" })),
+    ]
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      .slice(0, 15);
 
     // Get sharp question details for opinions
     const opinionsWithQuestions = await Promise.all(
@@ -45,21 +47,21 @@ export const getTopPageData = async (req, res) => {
         // Find which sharp question this opinion is linked to
         const questionLink = await QuestionLink.findOne({
           linkedItemId: opinion._id,
-          linkedItemType: opinion.type
-        }).populate('questionId');
+          linkedItemType: opinion.type,
+        }).populate("questionId");
 
         // Get author info from chat thread
         const chatThread = await ChatThread.findOne({
           $or: [
             { extractedProblemIds: opinion._id },
-            { extractedSolutionIds: opinion._id }
-          ]
+            { extractedSolutionIds: opinion._id },
+          ],
         });
 
         let authorName = "匿名ユーザー";
-        if (chatThread && chatThread.userId) {
+        if (chatThread?.userId) {
           const user = await User.findOne({ userId: chatThread.userId });
-          if (user && user.displayName) {
+          if (user?.displayName) {
             authorName = user.displayName;
           }
         }
@@ -67,7 +69,7 @@ export const getTopPageData = async (req, res) => {
         // Get like and comment counts
         const likeCount = await Like.countDocuments({
           targetId: opinion._id,
-          targetType: opinion.type
+          targetType: opinion.type,
         });
 
         return {
@@ -75,12 +77,15 @@ export const getTopPageData = async (req, res) => {
           type: opinion.type,
           text: opinion.statement,
           authorName,
-          questionTitle: questionLink?.questionId?.questionText || opinion.themeId?.title || "質問",
+          questionTitle:
+            questionLink?.questionId?.questionText ||
+            opinion.themeId?.title ||
+            "質問",
           questionTagline: questionLink?.questionId?.tagLine || "",
           questionId: questionLink?.questionId?._id || "",
           createdAt: opinion.createdAt,
           likeCount,
-          commentCount: 0 // You can implement comment counting if needed
+          commentCount: 0, // You can implement comment counting if needed
         };
       })
     );
@@ -126,9 +131,9 @@ export const getTopPageData = async (req, res) => {
         });
 
         // Get unique participant count from chat threads
-        const uniqueParticipantCount = await ChatThread.distinct('userId', {
+        const uniqueParticipantCount = await ChatThread.distinct("userId", {
           themeId: question.themeId,
-        }).then(userIds => userIds.filter(userId => userId).length);
+        }).then((userIds) => userIds.filter((userId) => userId).length);
 
         return {
           ...question.toObject(),
