@@ -1,6 +1,6 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { Card } from "../ui/card";
-import { useRef } from "react";
 
 interface Question {
   id: string;
@@ -20,9 +20,7 @@ interface QuestionsTableProps {
   questions: Question[];
 }
 
-const QuestionsTable = ({
-  questions,
-}: QuestionsTableProps) => {
+const QuestionsTable = ({ questions }: QuestionsTableProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -30,9 +28,9 @@ const QuestionsTable = ({
       <div className="px-8 md:px-16">
         <div className="mb-4 text-center">
           <div className="flex items-center justify-start gap-4 mb-4">
-            <img 
-              src="/images/home-themes.png" 
-              alt="お題リスト" 
+            <img
+              src="/images/home-themes.png"
+              alt="お題リスト"
               className="w-10 h-10"
             />
             <h2 className="text-2xl font-bold text-gray-900">お題リスト</h2>
@@ -40,10 +38,10 @@ const QuestionsTable = ({
         </div>
 
         <div className="mx-auto">
-          <div 
+          <div
             ref={containerRef}
             className="flex flex-col gap-4"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {questions.map((question) => {
               return (
@@ -63,15 +61,29 @@ const QuestionsTable = ({
                         <div className="flex items-center gap-2 md:gap-4">
                           <div className="flex items-center gap-1">
                             <span>参加人数</span>
-                            <span className="font-bold text-base text-gray-900">{question.participantCount}</span>
+                            <span className="font-bold text-base text-gray-900">
+                              {question.participantCount}
+                            </span>
                           </div>
                           <div className="flex items-center gap-1">
                             <span>抽出意見数</span>
-                            <span className="font-bold text-base text-gray-900">{question.commentCount}</span>
+                            <span className="font-bold text-base text-gray-900">
+                              {question.commentCount}
+                            </span>
                           </div>
                         </div>
-                        <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        <svg
+                          className="w-4 h-4 text-blue-600"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
                         </svg>
                       </div>
                     </div>

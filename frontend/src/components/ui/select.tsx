@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import * as React from "react";
 import { cn } from "../../lib/utils";
-import { ChevronUp, ChevronDown } from "lucide-react";
 
 const selectVariants = cva(
   "flex w-full rounded-md border border-input bg-background pl-3 pr-10 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none [&::-ms-expand]:hidden",

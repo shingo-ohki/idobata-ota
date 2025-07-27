@@ -68,7 +68,8 @@ const Top = () => {
   const mockQuestions = [
     {
       _id: "sq1",
-      questionText: "どうすれば、健康で活発な高齢者と年金制度の現状から、議論が健康に関わらず個人の人々や社会と考えていた政府の施策と主張や解決策として改革案を議論できるのか？",
+      questionText:
+        "どうすれば、健康で活発な高齢者と年金制度の現状から、議論が健康に関わらず個人の人々や社会と考えていた政府の施策と主張や解決策として改革案を議論できるのか？",
       tagLine: "年金・医療・介護",
       themeId: "1",
       issueCount: 45,
@@ -77,7 +78,8 @@ const Top = () => {
     },
     {
       _id: "sq2",
-      questionText: "どうすれば、環境問題への意識が高まる中で、持続可能な社会を実現するための具体的な政策や取り組みを市民レベルで推進できるのか？",
+      questionText:
+        "どうすれば、環境問題への意識が高まる中で、持続可能な社会を実現するための具体的な政策や取り組みを市民レベルで推進できるのか？",
       tagLine: "環境・エネルギー",
       themeId: "2",
       issueCount: 38,
@@ -86,7 +88,8 @@ const Top = () => {
     },
     {
       _id: "sq3",
-      questionText: "どうすれば、地方創生と都市集中の問題を解決し、地域ごとの特色を活かした持続可能な発展を実現できるのか？",
+      questionText:
+        "どうすれば、地方創生と都市集中の問題を解決し、地域ごとの特色を活かした持続可能な発展を実現できるのか？",
       tagLine: "地方創生・都市計画",
       themeId: "3",
       issueCount: 52,
@@ -95,7 +98,8 @@ const Top = () => {
     },
     {
       _id: "sq4",
-      questionText: "どうすれば、AI技術の発展に伴う雇用の変化に対応し、全ての人が新しい時代に適応できる社会を作れるのか？",
+      questionText:
+        "どうすれば、AI技術の発展に伴う雇用の変化に対応し、全ての人が新しい時代に適応できる社会を作れるのか？",
       tagLine: "テクノロジー・雇用",
       themeId: "1",
       issueCount: 67,
@@ -104,7 +108,8 @@ const Top = () => {
     },
     {
       _id: "sq5",
-      questionText: "どうすれば、子育て世代が安心して働き続けられる環境を整備し、少子化問題に対処できるのか？",
+      questionText:
+        "どうすれば、子育て世代が安心して働き続けられる環境を整備し、少子化問題に対処できるのか？",
       tagLine: "子育て・少子化対策",
       themeId: "2",
       issueCount: 73,
@@ -165,10 +170,8 @@ const Top = () => {
           latestOpinions: [], // Mock mode doesn't have opinions yet
         }
       : {
-          latestQuestions:
-            topPageData?.latestQuestions || [],
-          latestOpinions:
-            topPageData?.latestOpinions || [],
+          latestQuestions: topPageData?.latestQuestions || [],
+          latestOpinions: topPageData?.latestOpinions || [],
         };
 
     return <TopPageTemplate {...templateProps} />;
