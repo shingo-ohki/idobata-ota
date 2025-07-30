@@ -31,7 +31,7 @@ const OtherOpinionCard = ({ text, userName, type, userIconColor }: OtherOpinionC
   };
 
   return (
-    <div className="bg-white border border-black/16 rounded-2xl p-5 flex flex-col gap-2.5 relative">
+    <div className="bg-white border border-black/16 rounded-2xl p-5 flex flex-col gap-2.5 relative w-full md:w-[calc(50%-8px)]">
       <div className="absolute -top-3 left-0">
         <div className={`${getTagStyles()} rounded-full px-3 py-0 flex items-center justify-center gap-1`}>
           <span className="text-xs font-normal leading-8 tracking-wide">{type}</span>

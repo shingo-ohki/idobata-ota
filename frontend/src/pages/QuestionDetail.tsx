@@ -313,132 +313,93 @@ const QuestionDetail = () => {
               }
             />
           </div>
-          <DebateSummary
-            debateData={debateData}
-            visualReport={questionDetail?.visualReport}
-          />
-          <div className="mb-8">
-            <div className="flex justify-between items-center mb-4">
-              <div className="flex-grow">
-                <SectionHeading title="寄せられた意見" />
-              </div>
-              <Link
-                to={`/themes/${themeId}/questions/${qId}/comments`}
-                className="text-base text-primary-500 hover:underline"
-              >
-                すべて見る
-              </Link>
-            </div>
-
-            <div className="flex border-b border-neutral-200 mb-4">
-              <button
-                className={`flex-1 py-2 px-4 text-base font-bold ${activeTab === "issues" ? "border-b-4 border-primary-500 text-primary-700" : "text-neutral-700"}`}
-                onClick={() => setActiveTab("issues")}
-                type="button"
-              >
-                課題点 ({opinions.issues.length})
-              </button>
-              <button
-                className={`flex-1 py-2 px-4 text-base font-bold ${activeTab === "solutions" ? "border-b-4 border-primary-500 text-primary-700" : "text-neutral-700 "}`}
-                onClick={() => setActiveTab("solutions")}
-                type="button"
-              >
-                解決策 ({opinions.solutions.length})
-              </button>
-            </div>
-
-            <div className="space-y-3">
-              {activeTab === "issues"
-                ? opinions.issues
-                    .slice(0, 3)
-                    .map((issue) => (
-                      <OpinionCard
-                        key={issue.id}
-                        id={issue.id}
-                        text={issue.text}
-                        type="課題点"
-                        relevance={issue.relevance || 0}
-                      />
-                    ))
-                : opinions.solutions
-                    .slice(0, 3)
-                    .map((solution) => (
-                      <OpinionCard
-                        key={solution.id}
-                        id={solution.id}
-                        text={solution.text}
-                        type="解決策"
-                        relevance={solution.relevance || 0}
-                      />
-                    ))}
-            </div>
-
-            {((activeTab === "issues" && opinions.issues.length > 3) ||
-              (activeTab === "solutions" && opinions.solutions.length > 3)) && (
-              <div className="flex justify-start">
-                <Button asChild size="lg" className="w-auto mt-4">
-                  <Link to={`/themes/${themeId}/questions/${qId}/comments`}>
-                    もっと見る
-                    <ArrowRight className="h-5 w-5 ml-2" />
-                  </Link>
-                </Button>
-              </div>
-            )}
-          </div>
-          <CitizenReportExample
-            introduction={reportExample.introduction}
-            issues={reportExample.issues}
-          />
 
           {/* ほかの人の意見セクション */}
           <div className="mb-8 px-6">
             <div className="mb-6">
-              <div className="flex items-center gap-4 mb-2">
-                <div className="w-14 h-14 bg-orange-100 rounded-full flex items-center justify-center">
-                  <Lightbulb className="w-8 h-8 text-orange-400 stroke-2" />
+              {/* モバイル：縦積み */}
+              <div className="md:hidden">
+                <div className="flex items-center gap-4 mb-2">
+                  <div className="w-14 h-14 bg-orange-100 rounded-full flex items-center justify-center">
+                    <Lightbulb className="w-8 h-8 text-orange-400 stroke-2" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-gray-800 tracking-wide">
+                    ほかの人の意見
+                  </h2>
                 </div>
-                <h2 className="text-2xl font-bold text-gray-800 tracking-wide">
-                  ほかの人の意見
-                </h2>
+                <div className="flex justify-end items-center gap-4 flex-wrap">
+                  <div className="flex items-center justify-center gap-1 px-0 py-0">
+                    <span className="text-xs text-red-500 font-normal leading-8 tracking-wide">課題</span>
+                    <span className="text-xl font-bold text-gray-800 leading-8 tracking-wide">{opinions.issues.length}</span>
+                  </div>
+                  <div className="flex items-center justify-center gap-1 px-0 py-0">
+                    <span className="text-xs text-green-500 font-normal leading-8 tracking-wide">対策</span>
+                    <span className="text-xl font-bold text-gray-800 leading-8 tracking-wide">{opinions.solutions.length}</span>
+                  </div>
+                </div>
               </div>
-              <div className="flex justify-end items-center gap-4 flex-wrap">
-                <div className="flex items-center justify-center gap-1 px-0 py-0">
-                  <span className="text-xs text-red-500 font-normal leading-8 tracking-wide">課題</span>
-                  <span className="text-xl font-bold text-gray-800 leading-8 tracking-wide">567</span>
+
+              {/* PC：横並び */}
+              <div className="hidden md:flex justify-between items-end">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 bg-orange-100 rounded-full flex items-center justify-center">
+                    <Lightbulb className="w-8 h-8 text-orange-400 stroke-2" />
+                  </div>
+                  <h2 className="text-3xl font-bold text-gray-800 tracking-wide">
+                    ほかの人の意見
+                  </h2>
                 </div>
-                <div className="flex items-center justify-center gap-1 px-0 py-0">
-                  <span className="text-xs text-green-500 font-normal leading-8 tracking-wide">対策</span>
-                  <span className="text-xl font-bold text-gray-800 leading-8 tracking-wide">34</span>
+                <div className="flex items-center gap-4 flex-wrap">
+                  <div className="flex items-center justify-center gap-1 px-0 py-0">
+                    <span className="text-xs text-red-500 font-normal leading-8 tracking-wide">課題</span>
+                    <span className="text-xl font-bold text-gray-800 leading-8 tracking-wide">{opinions.issues.length}</span>
+                  </div>
+                  <div className="flex items-center justify-center gap-1 px-0 py-0">
+                    <span className="text-xs text-green-500 font-normal leading-8 tracking-wide">対策</span>
+                    <span className="text-xl font-bold text-gray-800 leading-8 tracking-wide">{opinions.solutions.length}</span>
+                  </div>
                 </div>
               </div>
             </div>
 
             <div className="bg-gray-100 rounded-xl p-3 relative">
-              <div className="flex flex-col gap-4 pt-3">
-                <OtherOpinionCard
-                  text="年金の支給開始年齢が引き上げられているため、退職後の生活設計が困難になる可能性がある。この変更は、高齢者の生活に直接的な影響を与え、経済的な安定を損なう懸念がある。"
-                  userName="メジロ123"
-                  type="課題"
-                  userIconColor="red"
-                />
-                <OtherOpinionCard
-                  text="年金の支給開始年齢が引き上げられているため、退職後の生活設計が困難になる可能性がある。この変更は、高齢者の生活に直接的な影響を与え、経済的な安定を損なう懸念がある。"
-                  userName="ホトトギス98"
-                  type="対策"
-                  userIconColor="blue"
-                />
-                <OtherOpinionCard
-                  text="年金の支給開始年齢が引き上げられているため、退職後の生活設計が困難になる可能性がある。この変更は、高齢者の生活に直接的な影響を与え、経済的な安定を損なう懸念がある。"
-                  userName="カッコウ5"
-                  type="対策"
-                  userIconColor="yellow"
-                />
-                <OtherOpinionCard
-                  text="年金の支給開始年齢が引き上げられているため、退職後の生活設計が困難になる可能性がある。この変更は、高齢者の生活に直接的な影響を与え、経済的な安定を損なう懸念がある。"
-                  userName="メジロ123"
-                  type="課題"
-                  userIconColor="green"
-                />
+              <div className="flex flex-col md:flex-row md:flex-wrap gap-4 pt-3">
+                {(() => {
+                  // 課題と対策を統合して新しい順に並べる
+                  const allOpinions = [
+                    ...opinions.issues.map((issue, index) => ({
+                      id: issue.id,
+                      text: issue.text,
+                      type: "課題" as const,
+                      relevance: issue.relevance,
+                      userName: `ユーザー${index + 1}`,
+                      userIconColor: ["red", "blue", "yellow", "green"][index % 4] as "red" | "blue" | "yellow" | "green"
+                    })),
+                    ...opinions.solutions.map((solution, index) => ({
+                      id: solution.id,
+                      text: solution.text,
+                      type: "対策" as const,
+                      relevance: solution.relevance,
+                      userName: `ユーザー${index + opinions.issues.length + 1}`,
+                      userIconColor: ["red", "blue", "yellow", "green"][(index + opinions.issues.length) % 4] as "red" | "blue" | "yellow" | "green"
+                    }))
+                  ];
+
+                  // 関連度の高い順にソートして最初の4つを取得
+                  const topOpinions = allOpinions
+                    .sort((a, b) => b.relevance - a.relevance)
+                    .slice(0, 4);
+
+                  return topOpinions.map((opinion, index) => (
+                    <OtherOpinionCard
+                      key={opinion.id}
+                      text={opinion.text}
+                      userName={opinion.userName}
+                      type={opinion.type}
+                      userIconColor={opinion.userIconColor}
+                    />
+                  ));
+                })()}
               </div>
 
               {/* グラデーションオーバーレイ */}
