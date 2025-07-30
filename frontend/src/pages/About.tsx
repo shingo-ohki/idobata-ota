@@ -4,7 +4,6 @@ import { useSiteConfig } from "../contexts/SiteConfigContext";
 
 const About = () => {
   const breadcrumbItems = [
-    { label: "TOP", href: "/" },
     { label: "このサイトについて", href: "/about" },
   ];
 

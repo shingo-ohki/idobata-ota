@@ -105,7 +105,6 @@ const CommentsPage = () => {
       ? mockQuestionData
       : questionDetail;
     const breadcrumbItems = [
-      { label: "TOP", href: "/" },
       { label: "テーマ一覧", href: "/themes" },
       {
         label: "テーマ詳細",

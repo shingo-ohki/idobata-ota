@@ -7,7 +7,6 @@ import { useThemes } from "../hooks/useThemes";
 
 const Themes = () => {
   const breadcrumbItems = [
-    { label: "TOP", href: "/" },
     { label: "テーマ一覧", href: "/themes" },
   ];
 

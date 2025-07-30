@@ -116,7 +116,6 @@ const ThemeDetailTemplate = forwardRef<
     };
 
     const breadcrumbItems = [
-      { label: "TOP", href: "/" },
       { label: "テーマ一覧", href: "/themes" },
       { label: theme.title, href: `/themes/${theme._id}` },
     ];
