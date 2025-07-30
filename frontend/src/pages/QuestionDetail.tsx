@@ -1,17 +1,12 @@
-import { ArrowRight, Lightbulb } from "lucide-react";
+import { Lightbulb } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FloatingChat, type FloatingChatRef } from "../components/chat";
 import BreadcrumbView from "../components/common/BreadcrumbView";
-import SectionHeading from "../components/common/SectionHeading";
-import CitizenReportExample from "../components/question/CitizenReportExample";
-import DebateSummary from "../components/question/DebateSummary";
-import OpinionCard from "../components/question/OpinionCard";
 import OtherOpinionCard from "../components/question/OtherOpinionCard";
 import ThemePromptSection from "../components/question/ThemePromptSection";
-import { Button } from "../components/ui/button";
 import { useAuth } from "../contexts/AuthContext";
-import { Link, useMock } from "../contexts/MockContext";
+import { useMock } from "../contexts/MockContext";
 import { useQuestionDetail } from "../hooks/useQuestionDetail";
 import { useThemeDetail } from "../hooks/useThemeDetail";
 import { QuestionChatManager } from "../services/chatManagers/QuestionChatManager";
@@ -21,7 +16,6 @@ const QuestionDetail = () => {
   const { themeId, qId } = useParams<{ themeId: string; qId: string }>();
   const { isMockMode } = useMock();
   const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState<"issues" | "solutions">("issues");
   const chatRef = useRef<FloatingChatRef>(null);
   const [chatManager, setChatManager] = useState<QuestionChatManager | null>(
     null
@@ -317,39 +311,16 @@ const QuestionDetail = () => {
           {/* ほかの人の意見セクション */}
           <div className="mb-8 px-6">
             <div className="mb-6">
-              {/* モバイル：縦積み */}
-              <div className="md:hidden">
-                <div className="flex items-center gap-4 mb-2">
-                  <div className="w-14 h-14 bg-orange-100 rounded-full flex items-center justify-center">
-                    <Lightbulb className="w-8 h-8 text-orange-400 stroke-2" />
-                  </div>
-                  <h2 className="text-2xl font-bold text-gray-800 tracking-wide">
-                    ほかの人の意見
-                  </h2>
-                </div>
-                <div className="flex justify-end items-center gap-4 flex-wrap">
-                  <div className="flex items-center justify-center gap-1 px-0 py-0">
-                    <span className="text-xs text-red-500 font-normal leading-8 tracking-wide">課題</span>
-                    <span className="text-xl font-bold text-gray-800 leading-8 tracking-wide">{opinions.issues.length}</span>
-                  </div>
-                  <div className="flex items-center justify-center gap-1 px-0 py-0">
-                    <span className="text-xs text-green-500 font-normal leading-8 tracking-wide">対策</span>
-                    <span className="text-xl font-bold text-gray-800 leading-8 tracking-wide">{opinions.solutions.length}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* PC：横並び */}
-              <div className="hidden md:flex justify-between items-end">
+              <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-2 md:gap-0">
                 <div className="flex items-center gap-4">
                   <div className="w-14 h-14 bg-orange-100 rounded-full flex items-center justify-center">
                     <Lightbulb className="w-8 h-8 text-orange-400 stroke-2" />
                   </div>
-                  <h2 className="text-3xl font-bold text-gray-800 tracking-wide">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gray-800 tracking-wide">
                     ほかの人の意見
                   </h2>
                 </div>
-                <div className="flex items-center gap-4 flex-wrap">
+                <div className="flex justify-end md:justify-start items-center gap-4 flex-wrap">
                   <div className="flex items-center justify-center gap-1 px-0 py-0">
                     <span className="text-xs text-red-500 font-normal leading-8 tracking-wide">課題</span>
                     <span className="text-xl font-bold text-gray-800 leading-8 tracking-wide">{opinions.issues.length}</span>
