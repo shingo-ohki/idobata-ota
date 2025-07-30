@@ -1,10 +1,11 @@
-import { BarChart3, Download, Lightbulb, Plus } from "lucide-react";
+import { BarChart3, Lightbulb, Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FloatingChat, type FloatingChatRef } from "../components/chat";
 import BreadcrumbView from "../components/common/BreadcrumbView";
 import OtherOpinionCard from "../components/question/OtherOpinionCard";
 import ThemePromptSection from "../components/question/ThemePromptSection";
+import { DownloadButton } from "../components/ui";
 import { useAuth } from "../contexts/AuthContext";
 import { useMock } from "../contexts/MockContext";
 import { useQuestionDetail } from "../hooks/useQuestionDetail";
@@ -323,10 +324,9 @@ const QuestionDetail = () => {
                     生成されたレポート
                   </h2>
                 </div>
-                <button type="button" className="flex items-center gap-2 px-4 py-2 bg-white border border-blue-500 text-blue-500 rounded-lg hover:bg-blue-50 transition-colors font-bold text-sm md:text-base">
-                  <Download className="w-5 h-5 md:w-6 md:h-6" />
+                <DownloadButton>
                   すべてダウンロード
-                </button>
+                </DownloadButton>
               </div>
             </div>
 
@@ -334,9 +334,9 @@ const QuestionDetail = () => {
             <div className="bg-gray-100 rounded-xl p-4 md:p-6 mb-6">
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
                 <h3 className="text-xl md:text-2xl font-bold text-gray-800">論点まとめ</h3>
-                <button type="button" className="flex items-center gap-2 px-4 py-2 bg-white border border-blue-500 text-blue-500 rounded-lg hover:bg-blue-50 transition-colors font-bold text-sm md:text-base">
+                <DownloadButton>
                   PDFダウンロード
-                </button>
+                </DownloadButton>
               </div>
 
               <div className="bg-white rounded-2xl p-4 md:p-8 relative">
@@ -382,9 +382,9 @@ const QuestionDetail = () => {
             <div className="bg-gray-100 rounded-xl p-4 md:p-6 mb-6">
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
                 <h3 className="text-xl md:text-2xl font-bold text-gray-800">意見まとめ</h3>
-                <button type="button" className="flex items-center gap-2 px-4 py-2 bg-white border border-blue-500 text-blue-500 rounded-lg hover:bg-blue-50 transition-colors font-bold text-sm md:text-base">
+                <DownloadButton>
                   PDFダウンロード
-                </button>
+                </DownloadButton>
               </div>
 
               <div className="bg-white rounded-2xl p-4 md:p-8 relative">
@@ -420,9 +420,9 @@ const QuestionDetail = () => {
             <div className="bg-gray-100 rounded-xl p-4 md:p-6">
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
                 <h3 className="text-xl md:text-2xl font-bold text-gray-800">イラスト要約</h3>
-                <button type="button" className="flex items-center gap-2 px-4 py-2 bg-white border border-blue-500 text-blue-500 rounded-lg hover:bg-blue-50 transition-colors font-bold text-sm md:text-base">
+                <DownloadButton>
                   画像ダウンロード
-                </button>
+                </DownloadButton>
               </div>
 
               <div className="bg-blue-50 border-4 border-white rounded-2xl py-4 md:py-8 relative">
