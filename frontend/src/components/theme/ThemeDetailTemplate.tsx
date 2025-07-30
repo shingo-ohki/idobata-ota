@@ -127,8 +127,20 @@ const ThemeDetailTemplate = forwardRef<
     }, [userId]);
 
     return (
-      <div className="container mx-auto px-4 py-8">
-        <BreadcrumbView items={breadcrumbItems} />
+      <div className="container mx-auto px-6 py-8">
+        <div className="hidden md:block">
+          <BreadcrumbView items={breadcrumbItems} />
+        </div>
+
+        {/* 上部のテキストセクション */}
+        <div className="mb-8 space-y-2">
+          <h2 className="text-2xl-bold text-zinc-800">
+            次のお題についてAIと対話しましょう
+          </h2>
+          <p className="text-md text-zinc-800">
+            対話内容はAIによって自動要約されお題ごとのレポートにまとめられます。
+          </p>
+        </div>
 
         <h1 className="text-2xl md:text-3xl font-bold mb-4">{theme.title}</h1>
 
