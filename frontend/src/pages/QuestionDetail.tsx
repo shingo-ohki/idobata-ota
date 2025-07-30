@@ -304,8 +304,12 @@ const QuestionDetail = () => {
               themeTitle={themeData.title}
               themeDescription={questionData.question}
               themeTags={questionData.tags}
-              participantCount={isMockMode ? 99 : (questionDetail?.participantCount || 0)}
-              dialogueCount={isMockMode ? 170 : (questionDetail?.dialogueCount || 0)}
+              participantCount={
+                isMockMode ? 99 : questionDetail?.participantCount || 0
+              }
+              dialogueCount={
+                isMockMode ? 170 : questionDetail?.dialogueCount || 0
+              }
             />
           </div>
           <DebateSummary

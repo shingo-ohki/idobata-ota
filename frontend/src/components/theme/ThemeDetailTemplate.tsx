@@ -145,10 +145,7 @@ const ThemeDetailTemplate = forwardRef<
 
         {/* お題カードセクション */}
         <div className="mb-8">
-          <ThemeCard
-            title={theme.title}
-            description={theme.description}
-          />
+          <ThemeCard title={theme.title} description={theme.description} />
         </div>
 
         <div className="mb-8">
