@@ -285,7 +285,6 @@ const QuestionDetail = () => {
         });
 
     const breadcrumbItems = [
-      { label: "TOP", href: "/" },
       { label: "テーマ一覧", href: "/themes" },
       { label: themeData.title, href: `/themes/${themeId}` },
       {
