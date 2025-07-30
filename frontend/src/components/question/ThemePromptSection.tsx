@@ -1,5 +1,6 @@
 import { Info } from "lucide-react";
 import ThemeCard from "../theme/ThemeCard";
+import { Tooltip } from "../ui";
 
 interface ThemePromptSectionProps {
   themeTitle: string;
@@ -55,12 +56,17 @@ const ThemePromptSection = ({
             </span>
           </div>
         </div>
-        <div className="flex items-center gap-1 px-2 py-1">
-          <Info className="h-4 w-4 text-zinc-500" strokeWidth={1.33} />
-          <span className="text-xs font-normal leading-6 tracking-[0.025em] text-zinc-500">
-            対話参加人数について
-          </span>
-        </div>
+        <Tooltip
+          content="「対話参加人数」は、対話をしたアカウントの数です。アカウントはお使いの端末ごとに自動生成されます。"
+          placement="top"
+        >
+          <div className="flex items-center gap-1 px-2 py-1">
+            <Info className="h-4 w-4 text-zinc-500" strokeWidth={1.33} />
+            <span className="text-xs font-normal leading-6 tracking-[0.025em] text-zinc-500">
+              対話参加人数について
+            </span>
+          </div>
+        </Tooltip>
       </div>
     </div>
   );

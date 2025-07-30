@@ -21,3 +21,4 @@ export {
   SheetTitle,
   SheetTrigger,
 } from "./sheet";
+export { Tooltip } from "./tooltip";
