@@ -1,4 +1,4 @@
-import { ArrowRight, Lightbulb, User } from "lucide-react";
+import { ArrowRight, Lightbulb } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FloatingChat, type FloatingChatRef } from "../components/chat";
@@ -7,6 +7,7 @@ import SectionHeading from "../components/common/SectionHeading";
 import CitizenReportExample from "../components/question/CitizenReportExample";
 import DebateSummary from "../components/question/DebateSummary";
 import OpinionCard from "../components/question/OpinionCard";
+import OtherOpinionCard from "../components/question/OtherOpinionCard";
 import ThemePromptSection from "../components/question/ThemePromptSection";
 import { Button } from "../components/ui/button";
 import { useAuth } from "../contexts/AuthContext";
@@ -414,85 +415,30 @@ const QuestionDetail = () => {
 
             <div className="bg-gray-100 rounded-xl p-3 relative">
               <div className="flex flex-col gap-4 pt-3">
-                {/* 意見カード1 */}
-                <div className="bg-white border border-black/16 rounded-2xl p-5 flex flex-col gap-2.5 relative">
-                  <div className="absolute -top-3 left-0">
-                    <div className="bg-red-100 border border-red-200 rounded-full px-3 py-0 flex items-center justify-center gap-1">
-                      <span className="text-xs text-red-500 font-normal leading-8 tracking-wide">課題</span>
-                    </div>
-                  </div>
-                  <p className="text-base font-normal text-gray-800 leading-8 tracking-wide">
-                    年金の支給開始年齢が引き上げられているため、退職後の生活設計が困難になる可能性がある。この変更は、高齢者の生活に直接的な影響を与え、経済的な安定を損なう懸念がある。
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 border border-black/36 rounded-full flex items-center justify-center">
-                      <div className="w-8 h-8 bg-red-50 rounded-full flex items-center justify-center">
-                        <User className="w-6 h-6 text-red-300 stroke-2" />
-                      </div>
-                    </div>
-                    <span className="text-base font-bold text-gray-800 leading-8 tracking-wide">メジロ123</span>
-                  </div>
-                </div>
-
-                {/* 意見カード2 */}
-                <div className="bg-white border border-black/16 rounded-2xl p-5 flex flex-col gap-2.5 relative">
-                  <div className="absolute -top-3 left-0">
-                    <div className="bg-green-100 border border-green-300 rounded-full px-3 py-0 flex items-center justify-center gap-1">
-                      <span className="text-xs text-green-500 font-normal leading-8 tracking-wide">対策</span>
-                    </div>
-                  </div>
-                  <p className="text-base font-normal text-gray-800 leading-8 tracking-wide">
-                    年金の支給開始年齢が引き上げられているため、退職後の生活設計が困難になる可能性がある。この変更は、高齢者の生活に直接的な影響を与え、経済的な安定を損なう懸念がある。
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 border border-black/36 rounded-full flex items-center justify-center">
-                      <div className="w-8 h-8 bg-blue-50 rounded-full flex items-center justify-center">
-                        <User className="w-6 h-6 text-blue-300 stroke-2" />
-                      </div>
-                    </div>
-                    <span className="text-base font-bold text-gray-800 leading-8 tracking-wide">ホトトギス98</span>
-                  </div>
-                </div>
-
-                {/* 意見カード3 */}
-                <div className="bg-white border border-black/16 rounded-2xl p-5 flex flex-col gap-2.5 relative">
-                  <div className="absolute -top-3 left-0">
-                    <div className="bg-green-100 border border-green-300 rounded-full px-3 py-0 flex items-center justify-center gap-1">
-                      <span className="text-xs text-green-500 font-normal leading-8 tracking-wide">対策</span>
-                    </div>
-                  </div>
-                  <p className="text-base font-normal text-gray-800 leading-8 tracking-wide">
-                    年金の支給開始年齢が引き上げられているため、退職後の生活設計が困難になる可能性がある。この変更は、高齢者の生活に直接的な影響を与え、経済的な安定を損なう懸念がある。
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 border border-black/36 rounded-full flex items-center justify-center">
-                      <div className="w-8 h-8 bg-yellow-50 rounded-full flex items-center justify-center">
-                        <User className="w-6 h-6 text-yellow-400 stroke-2" />
-                      </div>
-                    </div>
-                    <span className="text-base font-bold text-gray-800 leading-8 tracking-wide">カッコウ5</span>
-                  </div>
-                </div>
-
-                {/* 意見カード4 */}
-                <div className="bg-white border border-black/16 rounded-2xl p-5 flex flex-col gap-2.5 relative">
-                  <div className="absolute -top-3 left-0">
-                    <div className="bg-red-100 border border-red-200 rounded-full px-3 py-0 flex items-center justify-center gap-1">
-                      <span className="text-xs text-red-500 font-normal leading-8 tracking-wide">課題</span>
-                    </div>
-                  </div>
-                  <p className="text-base font-normal text-gray-800 leading-8 tracking-wide">
-                    年金の支給開始年齢が引き上げられているため、退職後の生活設計が困難になる可能性がある。この変更は、高齢者の生活に直接的な影響を与え、経済的な安定を損なう懸念がある。
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 border border-black/36 rounded-full flex items-center justify-center">
-                      <div className="w-8 h-8 bg-green-50 rounded-full flex items-center justify-center">
-                        <User className="w-6 h-6 text-green-300 stroke-2" />
-                      </div>
-                    </div>
-                    <span className="text-base font-bold text-gray-800 leading-8 tracking-wide">メジロ123</span>
-                  </div>
-                </div>
+                <OtherOpinionCard
+                  text="年金の支給開始年齢が引き上げられているため、退職後の生活設計が困難になる可能性がある。この変更は、高齢者の生活に直接的な影響を与え、経済的な安定を損なう懸念がある。"
+                  userName="メジロ123"
+                  type="課題"
+                  userIconColor="red"
+                />
+                <OtherOpinionCard
+                  text="年金の支給開始年齢が引き上げられているため、退職後の生活設計が困難になる可能性がある。この変更は、高齢者の生活に直接的な影響を与え、経済的な安定を損なう懸念がある。"
+                  userName="ホトトギス98"
+                  type="対策"
+                  userIconColor="blue"
+                />
+                <OtherOpinionCard
+                  text="年金の支給開始年齢が引き上げられているため、退職後の生活設計が困難になる可能性がある。この変更は、高齢者の生活に直接的な影響を与え、経済的な安定を損なう懸念がある。"
+                  userName="カッコウ5"
+                  type="対策"
+                  userIconColor="yellow"
+                />
+                <OtherOpinionCard
+                  text="年金の支給開始年齢が引き上げられているため、退職後の生活設計が困難になる可能性がある。この変更は、高齢者の生活に直接的な影響を与え、経済的な安定を損なう懸念がある。"
+                  userName="メジロ123"
+                  type="課題"
+                  userIconColor="green"
+                />
               </div>
 
               {/* グラデーションオーバーレイ */}
