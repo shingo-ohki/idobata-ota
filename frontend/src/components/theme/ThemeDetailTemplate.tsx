@@ -12,6 +12,7 @@ import BreadcrumbView from "../common/BreadcrumbView";
 import SectionHeading from "../common/SectionHeading";
 import CommentCard from "./CommentCard";
 import KeyQuestionCard from "./KeyQuestionCard";
+import ThemeCard from "./ThemeCard";
 
 interface ThemeDetailTemplateProps {
   theme: {
@@ -142,11 +143,13 @@ const ThemeDetailTemplate = forwardRef<
           </p>
         </div>
 
-        <h1 className="text-2xl md:text-3xl font-bold mb-4">{theme.title}</h1>
-
-        <p className="text-base text-muted-foreground mb-8">
-          {theme.description}
-        </p>
+        {/* お題カードセクション */}
+        <div className="mb-8">
+          <ThemeCard
+            title={theme.title}
+            description={theme.description}
+          />
+        </div>
 
         <div className="mb-8">
           <SectionHeading title={`重要論点（${keyQuestions.length}件）`} />

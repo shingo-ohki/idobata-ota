@@ -6,8 +6,8 @@ import BreadcrumbView from "../components/common/BreadcrumbView";
 import SectionHeading from "../components/common/SectionHeading";
 import CitizenReportExample from "../components/question/CitizenReportExample";
 import DebateSummary from "../components/question/DebateSummary";
-import KeyQuestionHeader from "../components/question/KeyQuestionHeader";
 import OpinionCard from "../components/question/OpinionCard";
+import ThemePromptSection from "../components/question/ThemePromptSection";
 import { Button } from "../components/ui/button";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useMock } from "../contexts/MockContext";
@@ -299,13 +299,15 @@ const QuestionDetail = () => {
           <div className="container mx-auto px-4 py-8">
             <BreadcrumbView items={breadcrumbItems} />
           </div>
-          <KeyQuestionHeader
-            question={questionData.question}
-            tagLine={questionData.tagLine}
-            tags={questionData.tags}
-            voteCount={questionData.voteCount}
-            questionId={questionData.id}
-          />
+          <div className="container mx-auto px-4 py-8">
+            <ThemePromptSection
+              themeTitle={themeData.title}
+              themeDescription={questionData.question}
+              themeTags={questionData.tags}
+              participantCount={isMockMode ? 99 : (questionDetail?.participantCount || 0)}
+              dialogueCount={isMockMode ? 170 : (questionDetail?.dialogueCount || 0)}
+            />
+          </div>
           <DebateSummary
             debateData={debateData}
             visualReport={questionDetail?.visualReport}
