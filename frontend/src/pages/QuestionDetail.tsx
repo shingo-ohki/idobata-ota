@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Lightbulb, User } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FloatingChat, type FloatingChatRef } from "../components/chat";
@@ -388,6 +388,120 @@ const QuestionDetail = () => {
             introduction={reportExample.introduction}
             issues={reportExample.issues}
           />
+
+          {/* ほかの人の意見セクション */}
+          <div className="mb-8 px-6">
+            <div className="mb-6">
+              <div className="flex items-center gap-4 mb-2">
+                <div className="w-14 h-14 bg-orange-100 rounded-full flex items-center justify-center">
+                  <Lightbulb className="w-8 h-8 text-orange-400 stroke-2" />
+                </div>
+                <h2 className="text-2xl font-bold text-gray-800 tracking-wide">
+                  ほかの人の意見
+                </h2>
+              </div>
+              <div className="flex justify-end items-center gap-4 flex-wrap">
+                <div className="flex items-center justify-center gap-1 px-0 py-0">
+                  <span className="text-xs text-red-500 font-normal leading-8 tracking-wide">課題</span>
+                  <span className="text-xl font-bold text-gray-800 leading-8 tracking-wide">567</span>
+                </div>
+                <div className="flex items-center justify-center gap-1 px-0 py-0">
+                  <span className="text-xs text-green-500 font-normal leading-8 tracking-wide">対策</span>
+                  <span className="text-xl font-bold text-gray-800 leading-8 tracking-wide">34</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gray-100 rounded-xl p-3 relative">
+              <div className="flex flex-col gap-4 pt-3">
+                {/* 意見カード1 */}
+                <div className="bg-white border border-black/16 rounded-2xl p-5 flex flex-col gap-2.5 relative">
+                  <div className="absolute -top-3 left-0">
+                    <div className="bg-red-100 border border-red-200 rounded-full px-3 py-0 flex items-center justify-center gap-1">
+                      <span className="text-xs text-red-500 font-normal leading-8 tracking-wide">課題</span>
+                    </div>
+                  </div>
+                  <p className="text-base font-normal text-gray-800 leading-8 tracking-wide">
+                    年金の支給開始年齢が引き上げられているため、退職後の生活設計が困難になる可能性がある。この変更は、高齢者の生活に直接的な影響を与え、経済的な安定を損なう懸念がある。
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 border border-black/36 rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 bg-red-50 rounded-full flex items-center justify-center">
+                        <User className="w-6 h-6 text-red-300 stroke-2" />
+                      </div>
+                    </div>
+                    <span className="text-base font-bold text-gray-800 leading-8 tracking-wide">メジロ123</span>
+                  </div>
+                </div>
+
+                {/* 意見カード2 */}
+                <div className="bg-white border border-black/16 rounded-2xl p-5 flex flex-col gap-2.5 relative">
+                  <div className="absolute -top-3 left-0">
+                    <div className="bg-green-100 border border-green-300 rounded-full px-3 py-0 flex items-center justify-center gap-1">
+                      <span className="text-xs text-green-500 font-normal leading-8 tracking-wide">対策</span>
+                    </div>
+                  </div>
+                  <p className="text-base font-normal text-gray-800 leading-8 tracking-wide">
+                    年金の支給開始年齢が引き上げられているため、退職後の生活設計が困難になる可能性がある。この変更は、高齢者の生活に直接的な影響を与え、経済的な安定を損なう懸念がある。
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 border border-black/36 rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 bg-blue-50 rounded-full flex items-center justify-center">
+                        <User className="w-6 h-6 text-blue-300 stroke-2" />
+                      </div>
+                    </div>
+                    <span className="text-base font-bold text-gray-800 leading-8 tracking-wide">ホトトギス98</span>
+                  </div>
+                </div>
+
+                {/* 意見カード3 */}
+                <div className="bg-white border border-black/16 rounded-2xl p-5 flex flex-col gap-2.5 relative">
+                  <div className="absolute -top-3 left-0">
+                    <div className="bg-green-100 border border-green-300 rounded-full px-3 py-0 flex items-center justify-center gap-1">
+                      <span className="text-xs text-green-500 font-normal leading-8 tracking-wide">対策</span>
+                    </div>
+                  </div>
+                  <p className="text-base font-normal text-gray-800 leading-8 tracking-wide">
+                    年金の支給開始年齢が引き上げられているため、退職後の生活設計が困難になる可能性がある。この変更は、高齢者の生活に直接的な影響を与え、経済的な安定を損なう懸念がある。
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 border border-black/36 rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 bg-yellow-50 rounded-full flex items-center justify-center">
+                        <User className="w-6 h-6 text-yellow-400 stroke-2" />
+                      </div>
+                    </div>
+                    <span className="text-base font-bold text-gray-800 leading-8 tracking-wide">カッコウ5</span>
+                  </div>
+                </div>
+
+                {/* 意見カード4 */}
+                <div className="bg-white border border-black/16 rounded-2xl p-5 flex flex-col gap-2.5 relative">
+                  <div className="absolute -top-3 left-0">
+                    <div className="bg-red-100 border border-red-200 rounded-full px-3 py-0 flex items-center justify-center gap-1">
+                      <span className="text-xs text-red-500 font-normal leading-8 tracking-wide">課題</span>
+                    </div>
+                  </div>
+                  <p className="text-base font-normal text-gray-800 leading-8 tracking-wide">
+                    年金の支給開始年齢が引き上げられているため、退職後の生活設計が困難になる可能性がある。この変更は、高齢者の生活に直接的な影響を与え、経済的な安定を損なう懸念がある。
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 border border-black/36 rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 bg-green-50 rounded-full flex items-center justify-center">
+                        <User className="w-6 h-6 text-green-300 stroke-2" />
+                      </div>
+                    </div>
+                    <span className="text-base font-bold text-gray-800 leading-8 tracking-wide">メジロ123</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* グラデーションオーバーレイ */}
+              <div className="absolute bottom-0 left-0 w-full h-[100px] bg-gradient-to-t from-gray-50 to-transparent pointer-events-none" />
+
+              {/* スクロールバー */}
+              <div className="absolute top-1 right-0 w-2.5 h-[106px] bg-black/16 rounded-full" />
+            </div>
+          </div>
         </div>
         <FloatingChat
           ref={chatRef}
