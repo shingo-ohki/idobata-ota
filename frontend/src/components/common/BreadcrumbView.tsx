@@ -20,14 +20,18 @@ export function BreadcrumbView({ items, homeHref = "/" }: BreadcrumbViewProps) {
           to={homeHref}
           className="inline-flex items-baseline gap-1 text-secondary-500 hover:text-secondary-600 transition-colors no-underline"
         >
-          <Home size={12} strokeWidth={1} className="inline-block translate-y-0.5" />
+          <Home
+            size={12}
+            strokeWidth={1}
+            className="inline-block translate-y-0.5"
+          />
           <span>トップ</span>
         </Link>
 
         {/* パンくずリスト */}
         {items.map((item, index) => (
           <span key={`${item.label}-${index}`}>
-            <span className="text-secondary-500 mx-1"> {'>'} </span>
+            <span className="text-secondary-500 mx-1"> {">"} </span>
             <Link
               to={item.href}
               className="text-secondary-500 no-underline hover:text-secondary-600 transition-colors"
