@@ -36,8 +36,8 @@ const ThemePromptSection = ({
       />
 
       {/* 統計情報 */}
-      <div className="flex flex-col items-end space-y-1">
-        <div className="flex flex-wrap justify-end items-center gap-4">
+      <div className="flex flex-col items-end space-y-1 md:flex-row md:justify-start md:items-center md:space-y-0 md:gap-4">
+        <div className="flex flex-wrap justify-end items-center gap-4 md:justify-start">
           <div className="flex justify-center items-center gap-1">
             <span className="text-xs font-normal leading-6 tracking-[0.025em] text-zinc-500">
               対話参加人数
