@@ -55,7 +55,7 @@ const MyPage: React.FC = () => {
   }
 
   return (
-    <div className="mx-auto p-4 xl:max-w-none">
+    <div className="mx-auto p-8 md:p-16 xl:max-w-none">
       <SectionHeading title="マイページ" />
 
       <div className="flex flex-col gap-8 text-base">
