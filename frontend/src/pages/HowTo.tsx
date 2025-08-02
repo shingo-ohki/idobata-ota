@@ -1,8 +1,8 @@
 import React from "react";
-import { HEADER_HEIGHT } from "../components/layout/Header";
 import { Link } from "react-router-dom";
-import { Button } from "../components/ui/button";
 import BreadcrumbView from "../components/common/BreadcrumbView";
+import { HEADER_HEIGHT } from "../components/layout/Header";
+import { Button } from "../components/ui/button";
 
 const HowTo: React.FC = () => {
   const breadcrumbItems = [{ label: "使いかた", href: "/howto" }];
@@ -14,7 +14,7 @@ const HowTo: React.FC = () => {
       const elementPosition = element.offsetTop - HEADER_HEIGHT - marginTop;
       window.scrollTo({
         top: elementPosition,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     }
   };
@@ -33,8 +33,18 @@ const HowTo: React.FC = () => {
             onClick={() => scrollToSection("ai-dialogue")}
             className="text-blue-600 hover:text-blue-800 font-lg flex items-center gap-2 transition-colors"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
             </svg>
             AIと対話する
           </button>
@@ -42,8 +52,18 @@ const HowTo: React.FC = () => {
             onClick={() => scrollToSection("view-report")}
             className="text-blue-600 hover:text-blue-800 font-lg flex items-center gap-2 transition-colors"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
             </svg>
             レポートを見る
           </button>
@@ -53,7 +73,11 @@ const HowTo: React.FC = () => {
       {/* AIと対話するセクション */}
       <section id="ai-dialogue" className="mb-8">
         <div className="flex items-center gap-3 mb-4">
-          <img src="/images/howto-ai-icon.png" alt="AIと対話する" className="w-12 h-12" />
+          <img
+            src="/images/howto-ai-icon.png"
+            alt="AIと対話する"
+            className="w-12 h-12"
+          />
           <h2 className="text-2xl font-bold">AIと対話する</h2>
         </div>
 
@@ -62,7 +86,11 @@ const HowTo: React.FC = () => {
           <h3 className="text-xl font-semibold mb-4 flex items-center gap-3">
             ① お題を選ぶ
           </h3>
-          <img src="/images/howto-select-theme.png" alt="お題を選ぶ" className="w-full max-w-[360px] mb-2" />
+          <img
+            src="/images/howto-select-theme.png"
+            alt="お題を選ぶ"
+            className="w-full max-w-[360px] mb-2"
+          />
           <p className="text-gray-700">
             トップページから対話したいお題を選択し、「対話をはじめる」ボタンを押してください。
           </p>
@@ -73,14 +101,22 @@ const HowTo: React.FC = () => {
           <h3 className="text-xl font-semibold mb-4 flex items-center gap-3">
             ② AIと対話を開始する
           </h3>
-          <img src="/images/howto-discussion-1.png" alt="AIと対話を開始する" className="w-full max-w-[360px] mb-2" />
+          <img
+            src="/images/howto-discussion-1.png"
+            alt="AIと対話を開始する"
+            className="w-full max-w-[360px] mb-2"
+          />
           <p className="text-gray-700 mb-2">
             選択したお題の対話ページが表示されます。AIチャット対話欄のテキスト入力エリアからテキストを送信し、対話を開始してください。
           </p>
           <p className="text-sm text-gray-600 mb-1">
             ※スマホやタブレットでは「AIと対話を開始する」ボタンを押し、対話を開始してください。
           </p>
-          <img src="/images/howto-discussion-2.png" alt="AIと対話を開始する" className="w-full max-w-[360px]" />
+          <img
+            src="/images/howto-discussion-2.png"
+            alt="AIと対話を開始する"
+            className="w-full max-w-[360px]"
+          />
         </div>
 
         {/* ステップ3: AIと対話を深める */}
@@ -98,75 +134,101 @@ const HowTo: React.FC = () => {
           <h3 className="text-xl font-semibold mb-4 flex items-center gap-3">
             ④ 対話が完了したら
           </h3>
-          <img src="/images/howto-finish-discussion.png" alt="対話が完了したら" className="w-full max-w-[360px] mb-2" />
+          <img
+            src="/images/howto-finish-discussion.png"
+            alt="対話が完了したら"
+            className="w-full max-w-[360px] mb-2"
+          />
           <p className="text-gray-700 mb-2">
             お題を変えたい場合は「お題を変える」ボタンを押してください。
           </p>
-          <img src="/images/howto-finish-discussion-2.png" alt="対話が完了したら" className="w-full max-w-[360px] mb-2" />
+          <img
+            src="/images/howto-finish-discussion-2.png"
+            alt="対話が完了したら"
+            className="w-full max-w-[360px] mb-2"
+          />
           <p className="text-gray-700 mb-2">
             対話を終了したい場合は「対話を終わる」ボタンを押してください。
           </p>
         </div>
       </section>
 
-              {/* レポートを見るセクション */}
-        <section id="view-report" className="mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <img src="/images/howto-report-icon.png" alt="レポートを見る" className="w-12 h-12" />
-            <h2 className="text-2xl font-bold">レポートを見る</h2>
-          </div>
+      {/* レポートを見るセクション */}
+      <section id="view-report" className="mb-8">
+        <div className="flex items-center gap-3 mb-4">
+          <img
+            src="/images/howto-report-icon.png"
+            alt="レポートを見る"
+            className="w-12 h-12"
+          />
+          <h2 className="text-2xl font-bold">レポートを見る</h2>
+        </div>
 
-          <p className="text-gray-700 mb-4 leading-relaxed">
-            すべての対話内容は自動で分析・要約され、お題ごとにレポートが自動生成されます。その内容をPDFや画像としてダウンロードできます。
+        <p className="text-gray-700 mb-4 leading-relaxed">
+          すべての対話内容は自動で分析・要約され、お題ごとにレポートが自動生成されます。その内容をPDFや画像としてダウンロードできます。
+        </p>
+
+        {/* 論点まとめ */}
+        <div className="mb-4 border border-gray-300 rounded-2xl p-6">
+          <h3 className="text-xl font-semibold mb-4 flex items-center gap-3">
+            論点まとめ
+          </h3>
+          <img
+            src="/images/howto-report-1.png"
+            alt="論点まとめ"
+            className="w-full max-w-[360px] mb-4"
+          />
+          <p className="text-gray-700">
+            すべての対話内容から抽出した論点をまとめたレポートです。
           </p>
+        </div>
 
-          {/* 論点まとめ */}
-          <div className="mb-4 border border-gray-300 rounded-2xl p-6">
-            <h3 className="text-xl font-semibold mb-4 flex items-center gap-3">
-              論点まとめ
-            </h3>
-            <img src="/images/howto-report-1.png" alt="論点まとめ" className="w-full max-w-[360px] mb-4" />
-            <p className="text-gray-700">
-              すべての対話内容から抽出した論点をまとめたレポートです。
-            </p>
-          </div>
+        {/* 意見まとめ */}
+        <div className="mb-4 border border-gray-300 rounded-2xl p-6">
+          <h3 className="text-xl font-semibold mb-4 flex items-center gap-3">
+            意見まとめ
+          </h3>
+          <img
+            src="/images/howto-report-2.png"
+            alt="意見まとめ"
+            className="w-full max-w-[360px] mb-4"
+          />
+          <p className="text-gray-700">
+            すべての対話内容から抽出した意見をまとめたレポートです。
+          </p>
+        </div>
 
-          {/* 意見まとめ */}
-          <div className="mb-4 border border-gray-300 rounded-2xl p-6">
-            <h3 className="text-xl font-semibold mb-4 flex items-center gap-3">
-              意見まとめ
-            </h3>
-            <img src="/images/howto-report-2.png" alt="意見まとめ" className="w-full max-w-[360px] mb-4" />
-            <p className="text-gray-700">
-              すべての対話内容から抽出した意見をまとめたレポートです。
-            </p>
-          </div>
-
-          {/* イラストまとめ */}
-          <div className="mb-4 border border-gray-300 rounded-2xl p-6">
-            <h3 className="text-xl font-semibold mb-4 flex items-center gap-3">
-              イラストまとめ
-            </h3>
-            <img src="/images/howto-report-3.png" alt="イラストまとめ" className="w-full max-w-[360px] mb-4" />
-            <p className="text-gray-700">
-              すべての対話内容を分析・要約し、イラスト化したレポートです。
-            </p>
-          </div>
-        </section>
+        {/* イラストまとめ */}
+        <div className="mb-4 border border-gray-300 rounded-2xl p-6">
+          <h3 className="text-xl font-semibold mb-4 flex items-center gap-3">
+            イラストまとめ
+          </h3>
+          <img
+            src="/images/howto-report-3.png"
+            alt="イラストまとめ"
+            className="w-full max-w-[360px] mb-4"
+          />
+          <p className="text-gray-700">
+            すべての対話内容を分析・要約し、イラスト化したレポートです。
+          </p>
+        </div>
+      </section>
 
       {/* はじめましょうセクション */}
       <section className="text-left bg-gradient-to-r from-blue-50 to-pink-50 rounded-xl p-8">
         <div className="flex items-center gap-3 mb-4">
-          <img src="/images/howto-discussion-icon.png" alt="はじめましょう" className="w-12 h-12" />
+          <img
+            src="/images/howto-discussion-icon.png"
+            alt="はじめましょう"
+            className="w-12 h-12"
+          />
           <h2 className="text-2xl font-bold">はじめましょう</h2>
         </div>
         <p className="text-gray-700 mb-4">
           トップページから気になるお題を選んで、AIとの対話を始めてみてください。
         </p>
         <Button asChild>
-          <Link to="/top">
-            トップページへ
-          </Link>
+          <Link to="/top">トップページへ</Link>
         </Button>
       </section>
     </div>
