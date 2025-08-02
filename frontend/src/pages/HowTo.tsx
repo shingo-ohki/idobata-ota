@@ -30,6 +30,7 @@ const HowTo: React.FC = () => {
         </p>
         <div className="flex flex-col items-start gap-4">
           <button
+            type="button"
             onClick={() => scrollToSection("ai-dialogue")}
             className="text-blue-600 hover:text-blue-800 font-lg flex items-center gap-2 transition-colors"
           >
@@ -39,6 +40,7 @@ const HowTo: React.FC = () => {
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
+              <title>右矢印</title>
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -49,6 +51,7 @@ const HowTo: React.FC = () => {
             AIと対話する
           </button>
           <button
+            type="button"
             onClick={() => scrollToSection("view-report")}
             className="text-blue-600 hover:text-blue-800 font-lg flex items-center gap-2 transition-colors"
           >
@@ -58,6 +61,7 @@ const HowTo: React.FC = () => {
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
+              <title>右矢印</title>
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
