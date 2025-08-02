@@ -11,6 +11,8 @@ import { Link, useLocation } from "react-router-dom";
 import { useSiteConfig } from "../../contexts/SiteConfigContext";
 import { Button } from "../ui/button";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
+// ヘッダーの高さ定数
+export const HEADER_HEIGHT = 80; // px
 
 // ロゴ画像のパス
 const LOGO_PATH = "/images/idobata-logo.svg";
@@ -27,7 +29,7 @@ const NAV_ITEMS = [
     to: "/about",
   },
   {
-    label: "使いかた(未！)",
+    label: "使い方",
     icon: BookOpen,
     to: "/howto",
   },
