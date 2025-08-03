@@ -133,10 +133,10 @@ const QuestionDetail = () => {
     return (
       <>
         <div className="xl:mr-[480px]">
-          <div className="hidden md:block container mx-auto px-4">
+          <div className="hidden md:block px-6">
             <BreadcrumbView items={breadcrumbItems} />
           </div>
-          <div className="container mx-auto px-4 py-8">
+          <div className="px-6 py-8">
             <ThemePromptSection
               themeTitle={themeData.title}
               themeDescription={questionData.question}
