@@ -7,11 +7,17 @@ interface IllustrationSummaryContentProps {
   } | null;
 }
 
-const IllustrationSummaryContent = ({ visualReport, questionDetail }: IllustrationSummaryContentProps): ReactNode => {
+const IllustrationSummaryContent = ({
+  visualReport,
+  questionDetail,
+}: IllustrationSummaryContentProps): ReactNode => {
   // HTMLコンテンツかどうかをチェック
-  if (visualReport && typeof visualReport === 'string') {
+  if (visualReport && typeof visualReport === "string") {
     // HTMLコンテンツの場合
-    if (visualReport.includes('<!DOCTYPE html>') || visualReport.includes('<html')) {
+    if (
+      visualReport.includes("<!DOCTYPE html>") ||
+      visualReport.includes("<html")
+    ) {
       return (
         <div className="w-full h-[600px] md:h-[800px]">
           <iframe
@@ -42,8 +48,7 @@ const IllustrationSummaryContent = ({ visualReport, questionDetail }: Illustrati
             ? "イラスト画像を読み込み中..."
             : visualReport === null
               ? "イラスト画像はまだ生成されていません"
-              : "イラスト画像はまだ生成されていません"
-          }
+              : "イラスト画像はまだ生成されていません"}
         </span>
         {questionDetail && visualReport === null && (
           <span className="text-gray-500 text-xs block mt-1">

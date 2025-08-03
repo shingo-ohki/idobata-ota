@@ -25,18 +25,16 @@ const QuestionDetail = () => {
     null
   );
 
-  const { questionDetail, isLoading, error } = useQuestionDetail(themeId || "", qId || "");
+  const { questionDetail, isLoading, error } = useQuestionDetail(
+    themeId || "",
+    qId || ""
+  );
   const { themeDetail: themeInfo } = useThemeDetail(themeId || "");
 
   const isCommentDisabled = themeInfo?.theme?.disableNewComment === true;
 
   useEffect(() => {
-    if (
-      themeId &&
-      qId &&
-      user?.id &&
-      questionDetail?.question?.questionText
-    ) {
+    if (themeId && qId && user?.id && questionDetail?.question?.questionText) {
       const questionText = questionDetail?.question?.questionText || "";
 
       const manager = new QuestionChatManager({
@@ -160,12 +158,20 @@ const QuestionDetail = () => {
                 </div>
                 <div className="flex justify-end md:justify-start items-center gap-4 flex-wrap">
                   <div className="flex items-center justify-center gap-1 px-0 py-0">
-                    <span className="text-xs text-red-500 font-normal leading-8 tracking-wide">課題</span>
-                    <span className="text-xl font-bold text-gray-800 leading-8 tracking-wide">{opinions.issues.length}</span>
+                    <span className="text-xs text-red-500 font-normal leading-8 tracking-wide">
+                      課題
+                    </span>
+                    <span className="text-xl font-bold text-gray-800 leading-8 tracking-wide">
+                      {opinions.issues.length}
+                    </span>
                   </div>
                   <div className="flex items-center justify-center gap-1 px-0 py-0">
-                    <span className="text-xs text-green-500 font-normal leading-8 tracking-wide">対策</span>
-                    <span className="text-xl font-bold text-gray-800 leading-8 tracking-wide">{opinions.solutions.length}</span>
+                    <span className="text-xs text-green-500 font-normal leading-8 tracking-wide">
+                      対策
+                    </span>
+                    <span className="text-xl font-bold text-gray-800 leading-8 tracking-wide">
+                      {opinions.solutions.length}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -182,7 +188,9 @@ const QuestionDetail = () => {
                       type: "課題" as const,
                       relevance: issue.relevance,
                       userName: `ユーザー${index + 1}`,
-                      userIconColor: ["red", "blue", "yellow", "green"][index % 4] as "red" | "blue" | "yellow" | "green"
+                      userIconColor: ["red", "blue", "yellow", "green"][
+                        index % 4
+                      ] as "red" | "blue" | "yellow" | "green",
                     })),
                     ...opinions.solutions.map((solution, index) => ({
                       id: solution.id,
@@ -190,8 +198,10 @@ const QuestionDetail = () => {
                       type: "対策" as const,
                       relevance: solution.relevance,
                       userName: `ユーザー${index + opinions.issues.length + 1}`,
-                      userIconColor: ["red", "blue", "yellow", "green"][(index + opinions.issues.length) % 4] as "red" | "blue" | "yellow" | "green"
-                    }))
+                      userIconColor: ["red", "blue", "yellow", "green"][
+                        (index + opinions.issues.length) % 4
+                      ] as "red" | "blue" | "yellow" | "green",
+                    })),
                   ];
 
                   // 関連度の高い順にソートして最初の4つを取得
@@ -232,9 +242,7 @@ const QuestionDetail = () => {
                     生成されたレポート
                   </h2>
                 </div>
-                <DownloadButton>
-                  すべてダウンロード
-                </DownloadButton>
+                <DownloadButton>すべてダウンロード</DownloadButton>
               </div>
             </div>
 
@@ -242,6 +250,8 @@ const QuestionDetail = () => {
             <ReportCard
               title="論点まとめ"
               downloadButtonText="PDFダウンロード"
+              isEmpty={!questionDetail?.debateData}
+              emptyDescription="多くの対話が集まると、論点をまとめたレポートが表示されるようになります。"
             >
               <DebatePointsContent debateData={questionDetail?.debateData} />
             </ReportCard>
@@ -250,6 +260,11 @@ const QuestionDetail = () => {
             <ReportCard
               title="意見まとめ"
               downloadButtonText="PDFダウンロード"
+              isEmpty={
+                !questionDetail?.reportExample ||
+                questionDetail?.reportExample?.issues?.length === 0
+              }
+              emptyDescription="多くの対話が集まると、意見をまとめたレポートが表示されるようになります。"
             >
               <OpinionSummaryContent
                 reportExample={
@@ -266,6 +281,8 @@ const QuestionDetail = () => {
             <IllustrationReportCard
               title="イラスト要約"
               downloadButtonText="画像ダウンロード"
+              isEmpty={!questionDetail?.visualReport}
+              emptyDescription="多くの対話が集まると、意見をまとめたイラストが表示されるようになります。"
             >
               <IllustrationSummaryContent
                 visualReport={questionDetail?.visualReport}
