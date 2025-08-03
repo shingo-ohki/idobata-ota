@@ -1,9 +1,11 @@
-import { BarChart3, Lightbulb, Plus } from "lucide-react";
+import { BarChart3, Lightbulb } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FloatingChat, type FloatingChatRef } from "../components/chat";
 import BreadcrumbView from "../components/common/BreadcrumbView";
 import DebatePointsContent from "../components/question/DebatePointsContent";
+import IllustrationReportCard from "../components/question/IllustrationReportCard";
+import IllustrationSummaryContent from "../components/question/IllustrationSummaryContent";
 import OpinionSummaryContent from "../components/question/OpinionSummaryContent";
 import OtherOpinionCard from "../components/question/OtherOpinionCard";
 import ReportCard from "../components/question/ReportCard";
@@ -261,77 +263,15 @@ const QuestionDetail = () => {
             </ReportCard>
 
             {/* イラスト要約カード */}
-            <div className="bg-gray-100 rounded-xl p-4 md:p-6">
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
-                <h3 className="text-xl md:text-2xl font-bold text-gray-800">イラスト要約</h3>
-                <DownloadButton>
-                  画像ダウンロード
-                </DownloadButton>
-              </div>
-
-              <div className="bg-blue-50 border-4 border-white rounded-2xl py-4 md:py-8 relative">
-                <div className="h-[200px] md:h-[280px] overflow-hidden flex justify-center items-center">
-                  {(() => {
-                    const visualReport = questionDetail?.visualReport;
-
-                    // HTMLコンテンツかどうかをチェック
-                    if (visualReport && typeof visualReport === 'string') {
-                      // HTMLコンテンツの場合
-                      if (visualReport.includes('<!DOCTYPE html>') || visualReport.includes('<html')) {
-                        return (
-                          <div className="w-full h-full">
-                            <iframe
-                              srcDoc={visualReport}
-                              className="w-full h-full border-0 rounded-2xl"
-                              title="イラスト要約"
-                              sandbox="allow-same-origin"
-                            />
-                          </div>
-                        );
-                      }
-                      // 画像URLの場合
-                      return (
-                        <img
-                          src={visualReport}
-                          alt="イラスト要約"
-                          className="max-w-full max-h-full object-contain rounded-2xl"
-                        />
-                      );
-                    }
-
-                    // 画像がない場合のプレースホルダー
-                    return (
-                      <div className="w-64 md:w-96 h-[300px] md:h-[500px] bg-gray-300 rounded-2xl flex items-center justify-center">
-                        <div className="text-center">
-                          <span className="text-gray-600 text-sm md:text-lg block mb-2">
-                            {questionDetail === null
-                              ? "イラスト画像を読み込み中..."
-                              : visualReport === null
-                                ? "イラスト画像はまだ生成されていません"
-                                : "イラスト画像はまだ生成されていません"
-                            }
-                          </span>
-                          {questionDetail && visualReport === null && (
-                            <span className="text-gray-500 text-xs block mt-1">
-                              より多くの意見が集まるとイラスト要約が生成されます
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })()}
-                </div>
-
-                {/* グラデーションオーバーレイ */}
-                <div className="absolute bottom-0 left-0 w-full h-[100px] bg-gradient-to-t from-blue-50 to-transparent pointer-events-none" />
-
-                {/* すべて読むボタン */}
-                <div className="flex justify-center items-center gap-1 mt-4">
-                  <Plus className="w-4 h-4 text-blue-500" />
-                  <span className="text-blue-500 font-bold">すべて読む</span>
-                </div>
-              </div>
-            </div>
+            <IllustrationReportCard
+              title="イラスト要約"
+              downloadButtonText="画像ダウンロード"
+            >
+              <IllustrationSummaryContent
+                visualReport={questionDetail?.visualReport}
+                questionDetail={questionDetail}
+              />
+            </IllustrationReportCard>
           </div>
         </div>
         <FloatingChat
