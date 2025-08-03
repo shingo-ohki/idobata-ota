@@ -1,5 +1,5 @@
-import { Plus } from "lucide-react";
-import { ReactNode } from "react";
+import { Plus, Minus } from "lucide-react";
+import { ReactNode, useState } from "react";
 import { DownloadButton } from "../ui";
 
 interface ReportCardProps {
@@ -10,6 +10,12 @@ interface ReportCardProps {
 }
 
 const ReportCard = ({ title, downloadButtonText, children, className = "" }: ReportCardProps) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleExpanded = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   return (
     <div className={`bg-gray-100 rounded-xl p-4 md:p-6 mb-6 ${className}`}>
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
@@ -20,17 +26,41 @@ const ReportCard = ({ title, downloadButtonText, children, className = "" }: Rep
       </div>
 
       <div className="bg-white rounded-2xl p-4 md:p-8 relative">
-        <div className="h-[200px] md:h-[280px] overflow-hidden">
+        <div className={`${isExpanded ? '' : 'h-[200px] md:h-[280px]'} overflow-hidden`}>
           {children}
         </div>
 
-        {/* グラデーションオーバーレイ */}
-        <div className="absolute bottom-0 left-0 w-full h-[100px] bg-gradient-to-t from-white to-transparent pointer-events-none" />
+        {/* グラデーションオーバーレイ（展開時は非表示） */}
+        {!isExpanded && (
+          <div className="absolute bottom-12 left-0 w-full h-[100px] bg-gradient-to-t from-white to-transparent pointer-events-none" />
+        )}
 
-        {/* すべて読むボタン */}
-        <div className="flex justify-center items-center gap-1 mt-4">
-          <Plus className="w-4 h-4 text-blue-500" />
-          <span className="text-blue-500 font-bold">すべて読む</span>
+        {/* すべて読む/閉じるボタン */}
+        <div className="flex justify-center w-full mt-4">
+          <button
+            type="button"
+            className="flex justify-center items-center gap-1 cursor-pointer bg-transparent border-none p-0 relative z-10 group"
+            onClick={toggleExpanded}
+            aria-label={isExpanded ? "閉じる" : "すべて読む"}
+          >
+            {isExpanded ? (
+              <>
+                <Minus className="w-6 h-6 text-blue-500" />
+                <span className="text-blue-500 font-bold relative">
+                  閉じる
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-200 group-hover:w-full" />
+                </span>
+              </>
+            ) : (
+              <>
+                <Plus className="w-6 h-6 text-blue-500" />
+                <span className="text-blue-500 font-bold relative">
+                  すべて読む
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-200 group-hover:w-full" />
+                </span>
+              </>
+            )}
+          </button>
         </div>
       </div>
     </div>
