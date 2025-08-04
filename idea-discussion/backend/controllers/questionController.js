@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import ChatThread from "../models/ChatThread.js";
 import Like from "../models/Like.js";
 import Problem from "../models/Problem.js";
 import QuestionLink from "../models/QuestionLink.js";
@@ -91,6 +92,43 @@ export const getQuestionDetails = async (req, res) => {
 
     const debateData = await getDebateAnalysis(questionId);
 
+    // 対話参加人数と対話数を計算
+    // 1. この質問に関連するProblemとSolutionのsourceOriginIdを取得
+    const allRelatedIds = [
+      ...problemIds,
+      ...solutionIds
+    ];
+
+    // 2. これらのIDに関連するChatThreadを取得（sourceTypeが'chat'のもの）
+    const relatedChatThreadIds = [];
+
+    // ProblemとSolutionからsourceOriginIdを取得
+    const relatedProblemsWithSource = await Problem.find({
+      _id: { $in: problemIds },
+      sourceType: 'chat'
+    }).select('sourceOriginId').lean();
+
+    const relatedSolutionsWithSource = await Solution.find({
+      _id: { $in: solutionIds },
+      sourceType: 'chat'
+    }).select('sourceOriginId').lean();
+
+    relatedChatThreadIds.push(
+      ...relatedProblemsWithSource.map(p => p.sourceOriginId),
+      ...relatedSolutionsWithSource.map(s => s.sourceOriginId)
+    );
+
+    // 3. 重複を除去
+    const uniqueChatThreadIds = [...new Set(relatedChatThreadIds.map(id => id.toString()))];
+
+    // 4. 対話参加人数（ユニークユーザー数）を計算
+    const participantCount = uniqueChatThreadIds.length > 0
+      ? await ChatThread.distinct('userId', { _id: { $in: uniqueChatThreadIds } }).then(users => users.length)
+      : 0;
+
+    // 5. 対話数（オピニオンの数）= 関連するProblemとSolutionの総数
+    const dialogueCount = relatedProblems.length + relatedSolutions.length;
+
     res.status(200).json({
       question: {
         ...question.toObject(),
@@ -101,6 +139,8 @@ export const getQuestionDetails = async (req, res) => {
       debateData,
       reportExample,
       visualReport: visualReport ? visualReport.overallAnalysis : null,
+      participantCount,
+      dialogueCount,
     });
   } catch (error) {
     console.error(`Error fetching details for question ${questionId}:`, error);
