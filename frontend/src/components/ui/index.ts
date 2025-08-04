@@ -8,6 +8,7 @@ export {
   CardTitle,
 } from "./card";
 export { Checkbox } from "./checkbox";
+export { DownloadButton } from "./download-button";
 export { FooterButton } from "./footer-button";
 export { Input } from "./input";
 export { Radio } from "./radio";
@@ -21,3 +22,4 @@ export {
   SheetTitle,
   SheetTrigger,
 } from "./sheet";
+export { Tooltip } from "./tooltip";

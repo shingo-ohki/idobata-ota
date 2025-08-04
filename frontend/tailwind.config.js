@@ -68,8 +68,8 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: [
-        "BIZ UDPGothic",
-        "Hiragino Kaku Gothic ProN",
+        '"BIZ UDPGothic"',
+        '"Hiragino Kaku Gothic ProN"',
         "Meiryo",
         "sans-serif",
       ],
