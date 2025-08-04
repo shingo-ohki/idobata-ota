@@ -209,7 +209,7 @@ const QuestionDetail = () => {
                     .sort((a, b) => b.relevance - a.relevance)
                     .slice(0, 4);
 
-                  return topOpinions.map((opinion, index) => (
+                  return topOpinions.map((opinion) => (
                     <OtherOpinionCard
                       key={opinion.id}
                       text={opinion.text}
