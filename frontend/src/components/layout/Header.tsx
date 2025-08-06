@@ -27,7 +27,7 @@ const NAV_ITEMS = [
     to: "/about",
   },
   {
-    label: "使いかた(未！)",
+    label: "使いかた",
     icon: BookOpen,
     to: "/howto",
   },

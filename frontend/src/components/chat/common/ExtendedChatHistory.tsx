@@ -28,18 +28,18 @@ function ExtendedChatHistory({ messages }: ExtendedChatHistoryProps) {
   );
 
   return (
-    <div className="flex-grow p-3 overflow-y-auto space-y-4 custom-scrollbar">
+    <div className="flex-grow px-3 py-2 overflow-y-auto space-y-2 custom-scrollbar">
       {sortedMessages.map((msg, index) => (
         <div
           key={`${msg.createdAt.toISOString()}-${index}`}
-          className={cn("animate-fade-in mb-3", {
+          className={cn("animate-fade-in mb-2", {
             "flex justify-end": msg instanceof UserMessage,
             "flex justify-start": msg instanceof SystemMessage,
             "flex justify-center": msg instanceof SystemNotification,
           })}
         >
           <div
-            className={cn("flex flex-col max-w-[90%]", {
+            className={cn("flex flex-col max-w-[95%]", {
               "items-end": msg instanceof UserMessage,
               "items-start": msg instanceof SystemMessage,
               "items-center": msg instanceof SystemNotification,
@@ -47,15 +47,15 @@ function ExtendedChatHistory({ messages }: ExtendedChatHistoryProps) {
           >
             <div
               className={cn("inline-block py-2 px-3 break-words", {
-                "bg-neutral-700 text-white rounded-2xl rounded-tr-sm":
+                "bg-white border border-gray-200 text-gray-800 rounded-2xl rounded-br-sm":
                   msg instanceof UserMessage,
-                "bg-white border border-neutral-200 text-neutral-800 rounded-2xl rounded-tl-sm":
+                "bg-white border border-gray-200 text-gray-800 rounded-2xl rounded-bl-sm":
                   msg instanceof SystemMessage,
-                "bg-primary-light border border-neutral-200 text-neutral-800 rounded-2xl":
+                "bg-gray-100 border border-gray-200 text-gray-700 rounded-2xl":
                   msg instanceof SystemNotification,
               })}
             >
-              <div className="text-sm whitespace-pre-wrap">
+              <div className="text-sm whitespace-pre-wrap leading-tight">
                 {msg.isStreaming ? (
                   <StreamingText content={msg.content} />
                 ) : (

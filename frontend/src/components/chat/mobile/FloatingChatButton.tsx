@@ -29,34 +29,20 @@ export const FloatingChatButton: React.FC<FloatingChatButtonProps> = ({
   }
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-50">
-      <div
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 p-4">
+      <Button
+        onClick={onClick}
         className={cn(
-          "bg-accentGradient rounded-full shadow-lg p-1",
+          "w-full bg-blue-500 hover:bg-blue-600 text-white rounded-xl py-4 px-6 text-base font-medium shadow-lg flex items-center justify-center gap-2",
           hasUnread && "animate-pulse"
         )}
       >
-        <div className="flex flex-grow items-center bg-white rounded-full">
-          <input
-            type="text"
-            placeholder="気になること・思ったことを伝える"
-            className="placeholder-gradient flex-grow px-5 py-4 bg-transparent border-none focus:outline-none text-base"
-            readOnly
-            onClick={onClick}
-          />
-          <Button
-            onClick={onClick}
-            variant="ghost"
-            size="icon"
-            className="rounded-full h-10 w-10 mr-2 flex items-center justify-center"
-          >
-            <Send className="h-5 w-5" />
-            {hasUnread && (
-              <span className="absolute top-1 right-1 h-3 w-3 rounded-full bg-red-500" />
-            )}
-          </Button>
-        </div>
-      </div>
+        <Send className="h-5 w-5" />
+        AIと対話を開始する
+        {hasUnread && (
+          <span className="absolute top-1 right-1 h-3 w-3 rounded-full bg-red-500" />
+        )}
+      </Button>
     </div>
   );
 };
