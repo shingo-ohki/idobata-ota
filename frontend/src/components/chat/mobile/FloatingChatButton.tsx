@@ -1,6 +1,5 @@
 import { Bot } from "lucide-react";
 import type React from "react";
-import { cn } from "../../../lib/utils";
 import { Button } from "../../ui/button";
 
 interface FloatingChatButtonProps {
@@ -29,11 +28,18 @@ export const FloatingChatButton: React.FC<FloatingChatButtonProps> = ({
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-400" style={{ height: '80px', padding: '12px 20px' }}>
+    <div
+      className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-400"
+      style={{ height: "80px", padding: "12px 20px" }}
+    >
       <Button
         onClick={onClick}
         className="w-full text-white rounded-lg text-base font-semibold shadow-lg flex items-center justify-center gap-2"
-        style={{ height: '56px', padding: '0 24px', backgroundColor: '#2D80FF' }}
+        style={{
+          height: "56px",
+          padding: "0 24px",
+          backgroundColor: "#2D80FF",
+        }}
       >
         <Bot className="h-7 w-7" />
         AIと対話を開始する

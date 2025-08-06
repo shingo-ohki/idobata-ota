@@ -1,4 +1,4 @@
-import { Bot, Loader2, Send } from "lucide-react";
+import { Bot, Loader2 } from "lucide-react";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import { useDraggable } from "../../../hooks/useDraggable";
@@ -7,8 +7,6 @@ import {
   ChatSheet as BaseChatSheet,
   ChatSheetContent,
 } from "../../ui/chat/chat-sheet";
-import { ChatHeader as DesktopChatHeader } from "../desktop/ChatHeader";
-import { ChatHeader as MobileChatHeader } from "../mobile/ChatHeader";
 import { useChat } from "./ChatProvider";
 import ExtendedChatHistory from "./ExtendedChatHistory";
 
@@ -32,7 +30,7 @@ export const ChatSheet: React.FC<ChatSheetProps> = ({
   const { messages, addMessage } = useChat();
   const [inputValue, setInputValue] = useState("");
   const [isSending, setIsSending] = useState(false);
-  const { height, handleDragStart } = useDraggable({
+  const { height } = useDraggable({
     minHeight: 400,
     maxHeight: window.innerHeight * 0.9,
     initialHeight: window.innerHeight * 0.75,
@@ -51,10 +49,10 @@ export const ChatSheet: React.FC<ChatSheetProps> = ({
 
       const message = inputValue;
       setInputValue("");
-      
+
       // Reset textarea height
       if (inputRef.current) {
-        inputRef.current.style.height = '48px';
+        inputRef.current.style.height = "48px";
       }
 
       if (onSendMessage) {
@@ -80,8 +78,8 @@ export const ChatSheet: React.FC<ChatSheetProps> = ({
     setInputValue(e.target.value);
     // Auto-resize textarea
     const textarea = e.target;
-    textarea.style.height = 'auto';
-    textarea.style.height = Math.min(textarea.scrollHeight, 128) + 'px';
+    textarea.style.height = "auto";
+    textarea.style.height = `${Math.min(textarea.scrollHeight, 128)}px`;
   };
 
   const handleKeyDown = (
@@ -117,14 +115,16 @@ export const ChatSheet: React.FC<ChatSheetProps> = ({
           <div className="flex items-center justify-center">
             <Bot className="w-6 h-6 text-blue-500" />
           </div>
-          <h2 className="text-base font-semibold text-gray-800">AIチャット対話</h2>
+          <h2 className="text-base font-semibold text-gray-800">
+            AIチャット対話
+          </h2>
         </div>
-        
+
         {/* Chat Messages Area - Scrollable middle section */}
         <div className="flex-1 overflow-auto px-3 py-2 space-y-2">
           <ExtendedChatHistory messages={messages} />
         </div>
-        
+
         {/* Input Area - Fixed at bottom */}
         <div className="flex-shrink-0 bg-gradient-to-br from-[#E1EAFB] to-[#E5F5F7] border-t border-gray-200">
           {disabled ? (
@@ -140,39 +140,39 @@ export const ChatSheet: React.FC<ChatSheetProps> = ({
                   className="w-full px-4 py-3 bg-white border-0 rounded-2xl focus:outline-none text-base resize-none min-h-12 max-h-32 text-gray-700 placeholder-gray-400"
                   disabled={isSending}
                   rows={1}
-                  style={{ height: '48px', overflow: 'hidden' }}
+                  style={{ height: "48px", overflow: "hidden" }}
                   ref={inputRef}
                 />
                 <div className="flex justify-between items-end px-3">
                   <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="text-gray-600 border-gray-300 hover:bg-gray-50 rounded-full px-3 py-1 text-xs h-7 font-medium"
-                    onClick={() => onSendMessage?.("お題を変える")}
-                  >
-                    お題を変える
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="text-gray-600 border-gray-300 hover:bg-gray-50 rounded-full px-3 py-1 text-xs h-7 font-medium"
-                    onClick={() => onSendMessage?.("対話を終わる")}
-                  >
-                    対話を終わる
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-gray-600 border-gray-300 hover:bg-gray-50 rounded-full px-3 py-1 text-xs h-7 font-medium"
+                      onClick={() => onSendMessage?.("お題を変える")}
+                    >
+                      お題を変える
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-gray-600 border-gray-300 hover:bg-gray-50 rounded-full px-3 py-1 text-xs h-7 font-medium"
+                      onClick={() => onSendMessage?.("対話を終わる")}
+                    >
+                      対話を終わる
                     </Button>
                   </div>
                   <Button
-                  onClick={handleSendMessage}
-                  className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg w-10 h-10 flex items-center justify-center text-xl font-bold shadow-sm flex-shrink-0"
-                  disabled={!inputValue.trim() || isSending}
-                >
-                  {isSending ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  ) : (
-                    "↑"
-                  )}
-                </Button>
+                    onClick={handleSendMessage}
+                    className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg w-10 h-10 flex items-center justify-center text-xl font-bold shadow-sm flex-shrink-0"
+                    disabled={!inputValue.trim() || isSending}
+                  >
+                    {isSending ? (
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                      "↑"
+                    )}
+                  </Button>
                 </div>
               </div>
             </div>
@@ -198,14 +198,16 @@ export const ChatSheet: React.FC<ChatSheetProps> = ({
           <div className="flex items-center justify-center">
             <Bot className="w-6 h-6 text-blue-500" />
           </div>
-          <h2 className="text-base font-semibold text-gray-800">AIチャット対話</h2>
+          <h2 className="text-base font-semibold text-gray-800">
+            AIチャット対話
+          </h2>
         </div>
-        
+
         {/* Chat Messages Area - Scrollable middle section */}
         <div className="flex-1 overflow-auto px-3 py-2 space-y-2">
           <ExtendedChatHistory messages={messages} />
         </div>
-        
+
         {/* Input Area - Fixed at bottom */}
         <div className="flex-shrink-0 bg-gradient-to-br from-[#E1EAFB] to-[#E5F5F7] border-t border-gray-200">
           {disabled ? (
@@ -221,39 +223,39 @@ export const ChatSheet: React.FC<ChatSheetProps> = ({
                   className="w-full px-4 py-3 bg-white border-0 rounded-2xl focus:outline-none text-base resize-none min-h-12 max-h-32 text-gray-700 placeholder-gray-400"
                   disabled={isSending}
                   rows={1}
-                  style={{ height: '48px', overflow: 'hidden' }}
+                  style={{ height: "48px", overflow: "hidden" }}
                   ref={inputRef}
                 />
                 <div className="flex justify-between items-end px-3">
                   <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="text-gray-600 border-gray-300 hover:bg-gray-50 rounded-full px-3 py-1 text-xs h-7 font-medium"
-                    onClick={() => onSendMessage?.("お題を変える")}
-                  >
-                    お題を変える
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="text-gray-600 border-gray-300 hover:bg-gray-50 rounded-full px-3 py-1 text-xs h-7 font-medium"
-                    onClick={() => onSendMessage?.("対話を終わる")}
-                  >
-                    対話を終わる
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-gray-600 border-gray-300 hover:bg-gray-50 rounded-full px-3 py-1 text-xs h-7 font-medium"
+                      onClick={() => onSendMessage?.("お題を変える")}
+                    >
+                      お題を変える
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-gray-600 border-gray-300 hover:bg-gray-50 rounded-full px-3 py-1 text-xs h-7 font-medium"
+                      onClick={() => onSendMessage?.("対話を終わる")}
+                    >
+                      対話を終わる
                     </Button>
                   </div>
                   <Button
-                  onClick={handleSendMessage}
-                  className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg w-10 h-10 flex items-center justify-center text-xl font-bold shadow-sm flex-shrink-0"
-                  disabled={!inputValue.trim() || isSending}
-                >
-                  {isSending ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  ) : (
-                    "↑"
-                  )}
-                </Button>
+                    onClick={handleSendMessage}
+                    className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg w-10 h-10 flex items-center justify-center text-xl font-bold shadow-sm flex-shrink-0"
+                    disabled={!inputValue.trim() || isSending}
+                  >
+                    {isSending ? (
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                      "↑"
+                    )}
+                  </Button>
                 </div>
               </div>
             </div>
