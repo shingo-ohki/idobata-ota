@@ -1,6 +1,5 @@
-import { Send } from "lucide-react";
+import { Bot } from "lucide-react";
 import type React from "react";
-import { cn } from "../../../lib/utils";
 import { Button } from "../../ui/button";
 
 interface FloatingChatButtonProps {
@@ -29,34 +28,25 @@ export const FloatingChatButton: React.FC<FloatingChatButtonProps> = ({
   }
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-50">
-      <div
-        className={cn(
-          "bg-accentGradient rounded-full shadow-lg p-1",
-          hasUnread && "animate-pulse"
-        )}
+    <div
+      className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-400"
+      style={{ height: "80px", padding: "12px 20px" }}
+    >
+      <Button
+        onClick={onClick}
+        className="w-full text-white rounded-lg text-base font-semibold shadow-lg flex items-center justify-center gap-2"
+        style={{
+          height: "56px",
+          padding: "0 24px",
+          backgroundColor: "#2D80FF",
+        }}
       >
-        <div className="flex flex-grow items-center bg-white rounded-full">
-          <input
-            type="text"
-            placeholder="気になること・思ったことを伝える"
-            className="placeholder-gradient flex-grow px-5 py-4 bg-transparent border-none focus:outline-none text-base"
-            readOnly
-            onClick={onClick}
-          />
-          <Button
-            onClick={onClick}
-            variant="ghost"
-            size="icon"
-            className="rounded-full h-10 w-10 mr-2 flex items-center justify-center"
-          >
-            <Send className="h-5 w-5" />
-            {hasUnread && (
-              <span className="absolute top-1 right-1 h-3 w-3 rounded-full bg-red-500" />
-            )}
-          </Button>
-        </div>
-      </div>
+        <Bot className="h-7 w-7" />
+        AIと対話を開始する
+        {hasUnread && (
+          <span className="absolute top-1 right-1 h-3 w-3 rounded-full bg-red-500" />
+        )}
+      </Button>
     </div>
   );
 };
