@@ -4,7 +4,7 @@ import FooterIdobata from "./FooterIdobata";
 
 const Footer = () => {
   return (
-    <footer className="flex flex-col items-center w-full bg-white rounded-t-[32px]">
+    <footer className="flex flex-col items-center w-full bg-white rounded-t-[32px] relative z-20">
       <FooterIdobata />
       <FooterDd2030 />
       <FooterGeneral />
