@@ -3,10 +3,7 @@ import MarkdownRenderer from "../components/common/MarkdownRenderer";
 import { useSiteConfig } from "../contexts/SiteConfigContext";
 
 const About = () => {
-  const breadcrumbItems = [
-    { label: "TOP", href: "/" },
-    { label: "このサイトについて", href: "/about" },
-  ];
+  const breadcrumbItems = [{ label: "このサイトについて", href: "/about" }];
 
   const { siteConfig, loading } = useSiteConfig();
 
