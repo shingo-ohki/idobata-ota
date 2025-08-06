@@ -5,7 +5,7 @@ import QuestionLink from "../models/QuestionLink.js";
 import SharpQuestion from "../models/SharpQuestion.js";
 import Solution from "../models/Solution.js";
 import Theme from "../models/Theme.js";
-import User from "../models/User.js";
+import { getUser } from "./userController.js";
 
 /**
  * Get latest themes and questions for the top page
@@ -60,7 +60,7 @@ export const getTopPageData = async (req, res) => {
 
         let authorName = "匿名ユーザー";
         if (chatThread?.userId) {
-          const user = await User.findOne({ userId: chatThread.userId });
+          const user = await getUser(chatThread.userId);
           if (user?.displayName) {
             authorName = user.displayName;
           }
