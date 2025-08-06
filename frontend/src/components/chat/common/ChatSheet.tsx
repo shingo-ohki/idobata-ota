@@ -51,6 +51,11 @@ export const ChatSheet: React.FC<ChatSheetProps> = ({
 
       const message = inputValue;
       setInputValue("");
+      
+      // Reset textarea height
+      if (inputRef.current) {
+        inputRef.current.style.height = '48px';
+      }
 
       if (onSendMessage) {
         try {
@@ -69,6 +74,14 @@ export const ChatSheet: React.FC<ChatSheetProps> = ({
         }, 1000);
       }
     }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInputValue(e.target.value);
+    // Auto-resize textarea
+    const textarea = e.target;
+    textarea.style.height = 'auto';
+    textarea.style.height = Math.min(textarea.scrollHeight, 128) + 'px';
   };
 
   const handleKeyDown = (
@@ -98,11 +111,11 @@ export const ChatSheet: React.FC<ChatSheetProps> = ({
   // For desktop view, we don't use the sheet component
   if (isDesktop) {
     return (
-      <div className="flex flex-col h-full bg-gradient-to-b from-blue-50 to-blue-100">
+      <div className="flex flex-col h-full bg-gradient-to-br from-[#E1EAFB] to-[#E5F5F7]">
         {/* AI Chat Header */}
         <div className="flex items-center gap-2 p-3 bg-white">
-          <div className="w-8 h-8 bg-white rounded-lg border border-blue-400 flex items-center justify-center">
-            <Bot className="w-4 h-4 text-blue-500" />
+          <div className="flex items-center justify-center">
+            <Bot className="w-6 h-6 text-blue-500" />
           </div>
           <h2 className="text-base font-semibold text-gray-800">AIチャット対話</h2>
         </div>
@@ -117,35 +130,24 @@ export const ChatSheet: React.FC<ChatSheetProps> = ({
           renderDisabledState()
         ) : (
           <div className="p-4">
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-4">
-              <div className="mb-4 flex gap-3 items-center">
-                <textarea
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder="ここに入力"
-                  className="flex-1 px-4 py-3 bg-white border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-base resize-none h-12 text-gray-700 placeholder-gray-400"
-                  disabled={isSending}
-                  rows={1}
-                  ref={inputRef}
-                />
-                <Button
-                  onClick={handleSendMessage}
-                  className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg w-12 h-12 flex items-center justify-center text-lg font-bold shadow-sm flex-shrink-0"
-                  disabled={!inputValue.trim() || isSending}
-                >
-                  {isSending ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  ) : (
-                    "↑"
-                  )}
-                </Button>
-              </div>
-              <div className="flex gap-3 justify-start">
+            <div className="bg-white rounded-2xl border border-gray-400 pb-3">
+              <textarea
+                value={inputValue}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+                placeholder="ここに入力"
+                className="w-full px-4 py-3 bg-white border-0 rounded-2xl focus:outline-none text-base resize-none min-h-12 max-h-32 text-gray-700 placeholder-gray-400"
+                disabled={isSending}
+                rows={1}
+                style={{ height: '48px', overflow: 'hidden' }}
+                ref={inputRef}
+              />
+              <div className="flex justify-between items-end px-3">
+                <div className="flex gap-2">
                 <Button
                   variant="outline"
                   size="sm"
-                  className="text-gray-600 border-gray-300 hover:bg-gray-50 rounded-full px-5 py-2 text-sm h-9 font-medium"
+                  className="text-gray-600 border-gray-300 hover:bg-gray-50 rounded-full px-3 py-1 text-xs h-7 font-medium"
                   onClick={() => onSendMessage?.("お題を変える")}
                 >
                   お題を変える
@@ -153,11 +155,23 @@ export const ChatSheet: React.FC<ChatSheetProps> = ({
                 <Button
                   variant="outline"
                   size="sm"
-                  className="text-gray-600 border-gray-300 hover:bg-gray-50 rounded-full px-5 py-2 text-sm h-9 font-medium"
+                  className="text-gray-600 border-gray-300 hover:bg-gray-50 rounded-full px-3 py-1 text-xs h-7 font-medium"
                   onClick={() => onSendMessage?.("対話を終わる")}
                 >
                   対話を終わる
-                </Button>
+                  </Button>
+                </div>
+                <Button
+                onClick={handleSendMessage}
+                className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg w-10 h-10 flex items-center justify-center text-xl font-bold shadow-sm flex-shrink-0"
+                disabled={!inputValue.trim() || isSending}
+              >
+                {isSending ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  "↑"
+                )}
+              </Button>
               </div>
             </div>
           </div>
@@ -170,7 +184,7 @@ export const ChatSheet: React.FC<ChatSheetProps> = ({
   return (
     <BaseChatSheet open={isOpen} onOpenChange={onClose}>
       <ChatSheetContent
-        className="p-0 h-auto rounded-t-xl overflow-hidden bg-gradient-to-b from-blue-50 to-blue-100"
+        className="p-0 h-auto rounded-t-xl overflow-hidden bg-gradient-to-br from-[#E1EAFB] to-[#E5F5F7]"
         style={{ height: `${height}px` }}
         onOpenAutoFocus={(e) => {
           e.preventDefault();
@@ -179,8 +193,8 @@ export const ChatSheet: React.FC<ChatSheetProps> = ({
       >
         {/* AI Chat Header */}
         <div className="flex items-center gap-2 p-3 bg-white">
-          <div className="w-8 h-8 bg-white rounded-lg border border-blue-400 flex items-center justify-center">
-            <Bot className="w-4 h-4 text-blue-500" />
+          <div className="flex items-center justify-center">
+            <Bot className="w-6 h-6 text-blue-500" />
           </div>
           <h2 className="text-base font-semibold text-gray-800">AIチャット対話</h2>
         </div>
@@ -195,35 +209,24 @@ export const ChatSheet: React.FC<ChatSheetProps> = ({
           renderDisabledState()
         ) : (
           <div className="p-4">
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-4">
-              <div className="mb-4 flex gap-3 items-center">
-                <textarea
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder="ここに入力"
-                  className="flex-1 px-4 py-3 bg-white border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-base resize-none h-12 text-gray-700 placeholder-gray-400"
-                  disabled={isSending}
-                  rows={1}
-                  ref={inputRef}
-                />
-                <Button
-                  onClick={handleSendMessage}
-                  className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg w-12 h-12 flex items-center justify-center text-lg font-bold shadow-sm flex-shrink-0"
-                  disabled={!inputValue.trim() || isSending}
-                >
-                  {isSending ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  ) : (
-                    "↑"
-                  )}
-                </Button>
-              </div>
-              <div className="flex gap-3 justify-start">
+            <div className="bg-white rounded-2xl border border-gray-400 pb-3">
+              <textarea
+                value={inputValue}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+                placeholder="ここに入力"
+                className="w-full px-4 py-3 bg-white border-0 rounded-2xl focus:outline-none text-base resize-none min-h-12 max-h-32 text-gray-700 placeholder-gray-400"
+                disabled={isSending}
+                rows={1}
+                style={{ height: '48px', overflow: 'hidden' }}
+                ref={inputRef}
+              />
+              <div className="flex justify-between items-end px-3">
+                <div className="flex gap-2">
                 <Button
                   variant="outline"
                   size="sm"
-                  className="text-gray-600 border-gray-300 hover:bg-gray-50 rounded-full px-5 py-2 text-sm h-9 font-medium"
+                  className="text-gray-600 border-gray-300 hover:bg-gray-50 rounded-full px-3 py-1 text-xs h-7 font-medium"
                   onClick={() => onSendMessage?.("お題を変える")}
                 >
                   お題を変える
@@ -231,11 +234,23 @@ export const ChatSheet: React.FC<ChatSheetProps> = ({
                 <Button
                   variant="outline"
                   size="sm"
-                  className="text-gray-600 border-gray-300 hover:bg-gray-50 rounded-full px-5 py-2 text-sm h-9 font-medium"
+                  className="text-gray-600 border-gray-300 hover:bg-gray-50 rounded-full px-3 py-1 text-xs h-7 font-medium"
                   onClick={() => onSendMessage?.("対話を終わる")}
                 >
                   対話を終わる
-                </Button>
+                  </Button>
+                </div>
+                <Button
+                onClick={handleSendMessage}
+                className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg w-10 h-10 flex items-center justify-center text-xl font-bold shadow-sm flex-shrink-0"
+                disabled={!inputValue.trim() || isSending}
+              >
+                {isSending ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  "↑"
+                )}
+              </Button>
               </div>
             </div>
           </div>

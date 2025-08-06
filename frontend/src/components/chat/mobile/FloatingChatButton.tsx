@@ -1,4 +1,4 @@
-import { Send } from "lucide-react";
+import { Bot } from "lucide-react";
 import type React from "react";
 import { cn } from "../../../lib/utils";
 import { Button } from "../../ui/button";
@@ -29,15 +29,13 @@ export const FloatingChatButton: React.FC<FloatingChatButtonProps> = ({
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 p-4">
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-400" style={{ height: '80px', padding: '12px 20px' }}>
       <Button
         onClick={onClick}
-        className={cn(
-          "w-full bg-blue-500 hover:bg-blue-600 text-white rounded-xl py-4 px-6 text-base font-medium shadow-lg flex items-center justify-center gap-2",
-          hasUnread && "animate-pulse"
-        )}
+        className="w-full text-white rounded-lg text-base font-semibold shadow-lg flex items-center justify-center gap-2"
+        style={{ height: '56px', padding: '0 24px', backgroundColor: '#2D80FF' }}
       >
-        <Send className="h-5 w-5" />
+        <Bot className="h-7 w-7" />
         AIと対話を開始する
         {hasUnread && (
           <span className="absolute top-1 right-1 h-3 w-3 rounded-full bg-red-500" />
