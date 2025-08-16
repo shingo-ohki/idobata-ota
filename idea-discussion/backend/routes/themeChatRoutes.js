@@ -1,7 +1,7 @@
 import express from "express";
 import {
-  getThreadByUserAndTheme,
   getThreadByUserAndQuestion,
+  getThreadByUserAndTheme,
   getThreadExtractionsByTheme,
   getThreadMessagesByTheme,
   handleNewMessageByTheme,
