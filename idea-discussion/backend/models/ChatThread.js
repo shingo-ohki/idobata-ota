@@ -45,6 +45,13 @@ const chatThreadSchema = new mongoose.Schema(
       ref: "Theme",
       required: true,
     },
+    questionId: {
+      // 追加：特定の質問に関連するスレッドかどうか
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "SharpQuestion",
+      required: false,
+      index: true, // Index questionId for faster lookups
+    },
   },
   { timestamps: true }
 ); // Adds createdAt and updatedAt automatically
