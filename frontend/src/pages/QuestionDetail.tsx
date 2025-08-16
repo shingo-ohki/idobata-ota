@@ -1,4 +1,4 @@
-import { BarChart3, Lightbulb } from "lucide-react";
+import { Lightbulb, SquareChartGantt } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FloatingChat, type FloatingChatRef } from "../components/chat";
@@ -236,7 +236,7 @@ const QuestionDetail = () => {
               <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 md:gap-0">
                 <div className="flex items-center gap-4">
                   <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center">
-                    <BarChart3 className="w-8 h-8 text-blue-400 stroke-2" />
+                    <SquareChartGantt className="w-8 h-8 text-blue-400 stroke-2" />
                   </div>
                   <h2 className="text-2xl md:text-3xl font-bold text-gray-800 tracking-wide">
                     生成されたレポート
