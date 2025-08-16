@@ -129,7 +129,7 @@ const QuestionDetail = () => {
     return (
       <>
         <div className="xl:mr-[480px]">
-          <div className="hidden md:block px-6">
+          <div className="px-6">
             <BreadcrumbView items={breadcrumbItems} />
           </div>
           <div className="px-6 py-8">
