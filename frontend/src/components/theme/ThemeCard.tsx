@@ -15,7 +15,7 @@ const ThemeCard = ({
       <div className="absolute inset-0 bg-white/70" />
 
       {/* 装飾的な円 */}
-      <div className="absolute -top-[310px] left-9 h-[550px] w-[550px] rounded-full border-[100px] border-white/40" />
+      <div className="absolute -top-[310px] -right-[250px] h-[550px] w-[550px] rounded-full border-[100px] border-white/40" />
 
       <div className="relative z-10 space-y-3">
         {/* お題ラベル */}
