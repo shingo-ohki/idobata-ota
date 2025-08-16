@@ -541,7 +541,79 @@ const getThreadMessagesByTheme = async (req, res) => {
   }
 };
 
-// Controller function for getting a thread by user and theme
+// Controller function for getting a thread by user and question
+const getThreadByUserAndQuestion = async (req, res) => {
+  const { userId, questionId } = req.query;
+
+  if (!userId) {
+    return res.status(400).json({ error: "User ID is required" });
+  }
+
+  if (!questionId) {
+    return res.status(400).json({ error: "Question ID is required" });
+  }
+
+  // Validate questionId
+  if (!mongoose.Types.ObjectId.isValid(questionId)) {
+    return res.status(400).json({ error: "Invalid question ID format" });
+  }
+
+  try {
+    // First, get the question to find the themeId
+    const question = await SharpQuestion.findById(questionId);
+    if (!question) {
+      return res.status(404).json({ error: "Question not found" });
+    }
+
+    const themeId = question.themeId;
+
+    // Build query object
+    const query = {
+      userId: userId,
+      questionId: questionId,
+    };
+
+    const chatThread = await ChatThread.findOne(query);
+
+    if (!chatThread) {
+      const newChatThread = new ChatThread({
+        themeId: themeId,
+        userId: userId,
+        questionId: questionId,
+        messages: [],
+        sessionId: `session_${Date.now()}`, // 一時的なセッションID
+      });
+
+      await newChatThread.save();
+
+      return res.status(200).json({
+        threadId: newChatThread._id,
+        userId: userId,
+        themeId: themeId,
+        questionId: questionId,
+        messages: [],
+      });
+    }
+
+    return res.status(200).json({
+      threadId: chatThread._id,
+      userId: chatThread.userId,
+      themeId: chatThread.themeId,
+      questionId: chatThread.questionId,
+      messages: chatThread.messages || [],
+    });
+  } catch (error) {
+    console.error(
+      `Error getting thread for user ${userId} and question ${questionId}:`,
+      error
+    );
+    return res.status(500).json({
+      error: "Internal server error while getting thread messages.",
+    });
+  }
+};
+
+// Controller function for getting a thread by user and theme (for theme-level chats)
 const getThreadByUserAndTheme = async (req, res) => {
   const { themeId } = req.params;
   const { userId } = req.query;
@@ -555,15 +627,20 @@ const getThreadByUserAndTheme = async (req, res) => {
   }
 
   try {
-    const chatThread = await ChatThread.findOne({
+    // For theme-level chats, we don't use questionId
+    const query = {
       themeId: themeId,
       userId: userId,
-    });
+      questionId: null, // Explicitly exclude question-specific threads
+    };
+
+    const chatThread = await ChatThread.findOne(query);
 
     if (!chatThread) {
       const newChatThread = new ChatThread({
         themeId: themeId,
         userId: userId,
+        questionId: null,
         messages: [],
         sessionId: `session_${Date.now()}`, // 一時的なセッションID
       });
@@ -600,4 +677,5 @@ export {
   getThreadMessagesByTheme,
   handleNewMessageByTheme,
   getThreadByUserAndTheme,
+  getThreadByUserAndQuestion,
 };

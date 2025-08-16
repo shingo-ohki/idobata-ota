@@ -91,43 +91,34 @@ export class QuestionChatManager {
   }
 
   private async sendMessageToBackend(userMessage: string): Promise<void> {
-    try {
-      const questionThreadUserId = `${this.userId}_question_${this.questionId}`;
-      const result = await apiClient.sendQuestionMessage(
-        questionThreadUserId,
-        userMessage,
-        this.themeId,
-        this.questionId,
-        this.threadId
-      );
+    const result = await apiClient.sendQuestionMessage(
+      this.userId,
+      userMessage,
+      this.themeId,
+      this.questionId,
+      this.threadId
+    );
 
-      if (result.isOk()) {
-        const { response, threadId } = result.value;
-
-        if (threadId && !this.threadId) {
-          this.setThreadId(threadId);
-        }
-
-        if (response) {
-          const systemResponse = new SystemMessage(response);
-          this.messages.push(systemResponse);
-          this.onNewMessage?.(systemResponse);
-        }
-      } else {
-        const errorMessage = new SystemMessage(
-          "メッセージの送信中にエラーが発生しました。"
-        );
-        this.messages.push(errorMessage);
-        this.onNewMessage?.(errorMessage);
-        console.error("Error sending message:", result.error);
-      }
-    } catch (error) {
-      console.error("Error in sendMessageToBackend:", error);
+    if (!result.isOk()) {
       const errorMessage = new SystemMessage(
         "メッセージの送信中にエラーが発生しました。"
       );
       this.messages.push(errorMessage);
       this.onNewMessage?.(errorMessage);
+      console.error("Error sending message:", result.error);
+      return;
+    }
+
+    const { response, threadId } = result.value;
+
+    if (threadId && !this.threadId) {
+      this.setThreadId(threadId);
+    }
+
+    if (response) {
+      const systemResponse = new SystemMessage(response);
+      this.messages.push(systemResponse);
+      this.onNewMessage?.(systemResponse);
     }
   }
 
@@ -248,11 +239,9 @@ export class QuestionChatManager {
         return;
       }
 
-      const questionThreadUserId = `${this.userId}_question_${this.questionId}`;
-
-      const result = await apiClient.getThreadByUserAndTheme(
-        questionThreadUserId,
-        this.themeId
+      const result = await apiClient.getThreadByUserAndQuestion(
+        this.userId,
+        this.questionId
       );
 
       if (!result.isOk()) {
@@ -260,9 +249,10 @@ export class QuestionChatManager {
         return;
       }
 
-      const { threadId, messages } = result.value;
+      const { threadId, messages, themeId } = result.value;
 
       this.threadId = threadId;
+      this.themeId = themeId; // themeIdを更新
       this.saveThreadIdToStorage();
 
       if (!messages || messages.length === 0) {

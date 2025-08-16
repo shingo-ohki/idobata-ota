@@ -412,10 +412,33 @@ export class ApiClient {
     userId: string,
     themeId: string
   ): Promise<HttpResult<{ threadId: string; messages: unknown[] }>> {
+    const url = `/themes/${themeId}/chat/thread?userId=${encodeURIComponent(userId)}`;
+
     return this.withRetry(() =>
-      this.httpClient.get<{ threadId: string; messages: unknown[] }>(
-        `/themes/${themeId}/chat/thread?userId=${encodeURIComponent(userId)}`
-      )
+      this.httpClient.get<{ threadId: string; messages: unknown[] }>(url)
+    );
+  }
+
+  async getThreadByUserAndQuestion(
+    userId: string,
+    questionId: string
+  ): Promise<
+    HttpResult<{
+      threadId: string;
+      messages: unknown[];
+      questionId: string;
+      themeId: string;
+    }>
+  > {
+    const url = `/themes/any/chat/thread-by-question?userId=${encodeURIComponent(userId)}&questionId=${encodeURIComponent(questionId)}`;
+
+    return this.withRetry(() =>
+      this.httpClient.get<{
+        threadId: string;
+        messages: unknown[];
+        questionId: string;
+        themeId: string;
+      }>(url)
     );
   }
 }
