@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import SectionHeading from "../components/common/SectionHeading";
+import BreadcrumbView from "../components/common/BreadcrumbView";
 import { Button } from "../components/ui/button";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -54,107 +54,122 @@ const MyPage: React.FC = () => {
     return <div className="p-4">読み込み中...</div>;
   }
 
+  const breadcrumbItems = [{ label: "マイページ", href: "/mypage" }];
+
   return (
-    <div className="mx-auto p-4 xl:max-w-none">
-      <SectionHeading title="マイページ" />
+    <div className="container mx-auto px-6 py-2 max-w-4xl">
+      <BreadcrumbView items={breadcrumbItems} />
 
-      <div className="flex flex-col gap-8 text-base">
-        {/* プロフィール画像セクション */}
-        <div className="">
-          <p className="text-gray-600 mb-2">プロフィール画像:</p>
-          <div className="flex items-center space-x-4">
-            <div className="w-24 h-24 bg-gray-100 rounded-full overflow-hidden border">
-              {user.profileImageUrl ? (
-                <img
-                  src={user.profileImageUrl}
-                  alt="プロフィール"
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center text-gray-400">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-12 h-12"
-                    role="img"
-                    aria-label="ユーザーアイコン"
-                  >
-                    <title>ユーザーアイコン</title>
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-                    />
-                  </svg>
-                </div>
-              )}
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                type="file"
-                accept="image/jpeg,image/png,image/gif"
-                className="hidden"
-                onChange={handleImageUpload}
-                ref={fileInputRef}
-              />
-              <Button
-                onClick={() => fileInputRef.current?.click()}
-                disabled={isUploading}
+      <div className="pt-4 mb-4">
+        <h1 className="text-4xl font-bold mb-4">マイページ</h1>
+
+        <p className="text-gray-600 mb-8 leading-relaxed">
+          本サイト内での表示名と画像を変更できます。アカウントはお使いの端末ごとに自動生成され、メールアドレスや個人情報の入力は不要でお手軽にご利用いただけます。
+        </p>
+
+        <div className="flex flex-col gap-8 text-base">
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label
+                htmlFor="displayName"
+                className="text-gray-600 mb-4 flex items-center gap-2"
               >
-                {isUploading ? "アップロード中..." : "画像を変更"}
-              </Button>
+                <span className="text-base">お名前</span>
+                <span className="text-xs text-gray-500">
+                  ※サイト内で表示されるので本名は控えてください
+                </span>
+              </label>
+
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  id="displayName"
+                  value={newDisplayName}
+                  onChange={(e) => setNewDisplayName(e.target.value)}
+                  className="max-w-[240px] border rounded p-2 h-10"
+                  placeholder="表示名を入力してください"
+                  required
+                />
+                <Button
+                  type="submit"
+                  disabled={isSaving}
+                  className="h-10 px-5 rounded-lg border-blue-600 bg-white hover:bg-blue-50 hover:text-blue-600 text-blue-600 text-xs font-bold tracking-[0.025em] whitespace-nowrap"
+                  variant="outline"
+                >
+                  {isSaving ? "保存中..." : "保存"}
+                </Button>
+              </div>
             </div>
-          </div>
+            {saveSuccess && (
+              <div className="bg-green-100 text-green-700 p-2 rounded mb-4">
+                保存されました
+              </div>
+            )}
+
+            {saveError && (
+              <div className="bg-red-100 text-red-700 p-2 rounded mb-4">
+                {saveError}
+              </div>
+            )}
+
+            {error && (
+              <div className="bg-red-100 text-red-700 p-2 rounded mb-4">
+                {error}
+              </div>
+            )}
+          </form>
         </div>
+      </div>
 
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="displayName" className="block text-gray-600 mb-2">
-              表示名（他のユーザーに表示されます）:
-            </label>
-
-            <div className="flex gap-2">
-              <input
-                type="text"
-                id="displayName"
-                value={newDisplayName}
-                onChange={(e) => setNewDisplayName(e.target.value)}
-                className="w-full border rounded p-2"
-                placeholder="表示名を入力してください"
-                required
+      {/* プロフィール画像セクション */}
+      <div className="mb-16">
+        <p className="text-gray-600 mb-4">プロフィール画像</p>
+        <div className="flex flex-col items-start gap-2">
+          <div className="w-24 h-24 bg-gray-100 rounded-full overflow-hidden border">
+            {user.profileImageUrl ? (
+              <img
+                src={user.profileImageUrl}
+                alt="プロフィール"
+                className="w-full h-full object-cover"
               />
-              <Button type="submit" disabled={isSaving}>
-                {isSaving ? "保存中..." : "保存"}
-              </Button>
-            </div>
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-gray-400">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-12 h-12"
+                  role="img"
+                  aria-label="ユーザーアイコン"
+                >
+                  <title>ユーザーアイコン</title>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                  />
+                </svg>
+              </div>
+            )}
           </div>
-          {saveSuccess && (
-            <div className="bg-green-100 text-green-700 p-2 rounded mb-4">
-              保存されました
-            </div>
-          )}
-
-          {saveError && (
-            <div className="bg-red-100 text-red-700 p-2 rounded mb-4">
-              {saveError}
-            </div>
-          )}
-
-          {error && (
-            <div className="bg-red-100 text-red-700 p-2 rounded mb-4">
-              {error}
-            </div>
-          )}
-        </form>
-        <div className="mb-4">
-          <p className="text-gray-600">ユーザーID（デバッグ用）:</p>
-          <p className="font-mono bg-gray-100 p-2 rounded">{user.id}</p>
-          <p className="text-sm text-gray-500 mt-1">
-            ※ユーザーIDはリセットできません
-          </p>
+          <div className="flex items-center gap-2">
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/gif"
+              className="hidden"
+              onChange={handleImageUpload}
+              ref={fileInputRef}
+            />
+            <Button
+              onClick={() => fileInputRef.current?.click()}
+              className="h-8 px-5 rounded-lg border-blue-600 bg-white hover:bg-blue-50 hover:text-blue-600 text-blue-600 text-xs font-bold tracking-[0.025em] flex items-center gap-2"
+              variant="outline"
+            >
+              {isUploading ? "アップロード中..." : "画像を変更"}
+            </Button>
+          </div>
         </div>
       </div>
     </div>

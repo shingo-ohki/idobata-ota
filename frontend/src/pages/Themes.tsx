@@ -6,10 +6,7 @@ import ThemeCard from "../components/home/ThemeCard";
 import { useThemes } from "../hooks/useThemes";
 
 const Themes = () => {
-  const breadcrumbItems = [
-    { label: "TOP", href: "/" },
-    { label: "テーマ一覧", href: "/themes" },
-  ];
+  const breadcrumbItems = [{ label: "テーマ一覧", href: "/themes" }];
 
   const chatRef = useRef<FloatingChatRef>(null);
   const { themes, isLoading, error } = useThemes();

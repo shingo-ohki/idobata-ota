@@ -27,6 +27,8 @@ export interface QuestionDetailResponse {
     }[];
   };
   visualReport: string;
+  participantCount?: number;
+  dialogueCount?: number;
 }
 
 export function useQuestionDetail(themeId: string, questionId: string) {

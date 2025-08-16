@@ -106,6 +106,7 @@ export interface Question {
   issueCount?: number; // 追加: 関連する課題の数
   solutionCount?: number; // 追加: 関連する解決策の数
   likeCount?: number;
+  themeId?: string;
 }
 
 export interface PolicyDraft {
@@ -149,6 +150,18 @@ export interface Theme {
   keyQuestionCount?: number;
   commentCount?: number;
   disableNewComment?: boolean;
+}
+
+export interface Opinion {
+  id: string;
+  type: "problem" | "solution";
+  text: string;
+  authorName: string;
+  questionTagline: string;
+  questionId: string;
+  createdAt: string | Date;
+  likeCount?: number;
+  commentCount?: number;
 }
 
 export type MessageType = "user" | "system" | "system-message";

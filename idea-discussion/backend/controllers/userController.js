@@ -14,7 +14,7 @@ const inMemoryUsers = new Map();
  * @param {string} userId - User ID
  * @returns {Object} User object
  */
-const getUser = async (userId) => {
+export const getUser = async (userId) => {
   try {
     let user = await User.findOne({ userId });
     if (user) return user;

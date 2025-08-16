@@ -13,16 +13,16 @@ const openai = new OpenAI({
  * Call an LLM model via OpenRouter API
  * @param {Array} messages - Array of message objects with role and content properties
  * @param {boolean} jsonOutput - Whether to request JSON output from the LLM
- * @param {string} model - The model ID to use (defaults to google/gemini-2.5-flash)
+ * @param {string} model - The model ID to use (defaults to google/gemini-2.0-flash-001)
  * @returns {string|Object} - Returns parsed JSON object if jsonOutput=true, otherwise string content
  */
 async function callLLM(
   messages,
   jsonOutput = false,
-  model = "google/gemini-2.5-flash"
+  model = "google/gemini-2.0-flash-001"
 ) {
   const options = {
-    model: model, // Default to gemini-2.5-flash, but allow override
+    model: model, // Default to gemini-2.0-flash-001, but allow override
     messages: messages,
   };
   if (jsonOutput) {
@@ -109,8 +109,8 @@ async function testLLM(model) {
 
 // List of available models that work well with OpenRouter
 const RECOMMENDED_MODELS = {
-  "gemini-flash": "google/gemini-2.5-flash",
-  "gemini-pro": "google/gemini-2.5-pro",
+  "gemini-flash": "google/gemini-2.0-flash-001",
+  "gemini-pro": "google/gemini-2.0-pro-001",
   "gemini-pro-vision": "google/gemini-pro-vision",
   "claude-3-opus": "anthropic/claude-3-opus:20240229",
   "claude-3-sonnet": "anthropic/claude-3-sonnet:20240229",
