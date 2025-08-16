@@ -1,5 +1,6 @@
 import { Home } from "lucide-react";
 import { Link } from "../../contexts/MockContext";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 interface BreadcrumbItem {
   label: string;
@@ -12,6 +13,12 @@ interface BreadcrumbViewProps {
 }
 
 export function BreadcrumbView({ items, homeHref = "/" }: BreadcrumbViewProps) {
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
+  if (!isDesktop) {
+    return null;
+  }
+
   return (
     <nav className="text-left py-2" aria-label="Breadcrumb">
       <div className="inline text-[10px] leading-[1.5] tracking-[0.03em]">

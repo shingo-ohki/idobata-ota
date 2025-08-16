@@ -129,7 +129,7 @@ const ThemeDetailTemplate = forwardRef<
 
     return (
       <div className="container mx-auto px-6 py-8">
-        <div className="hidden md:block">
+        <div>
           <BreadcrumbView items={breadcrumbItems} />
         </div>
 
