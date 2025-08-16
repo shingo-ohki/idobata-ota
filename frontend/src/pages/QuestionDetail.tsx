@@ -120,8 +120,6 @@ const QuestionDetail = () => {
     };
 
     const breadcrumbItems = [
-      { label: "テーマ一覧", href: "/themes" },
-      { label: themeData.title, href: `/themes/${themeId}` },
       {
         label: questionData.tagLine || questionData.question,
         href: `/themes/${themeId}/questions/${qId}`,
