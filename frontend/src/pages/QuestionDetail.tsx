@@ -242,7 +242,7 @@ const QuestionDetail = () => {
                         onClick={() =>
                           setIsOpinionsExpanded(!isOpinionsExpanded)
                         }
-                        className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 rounded-lg transition-colors duration-200"
+                        className="px-6 py-3 text-base font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors duration-200"
                       >
                         {isOpinionsExpanded
                           ? "折りたたむ"
