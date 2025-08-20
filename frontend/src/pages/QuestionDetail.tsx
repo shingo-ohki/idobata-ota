@@ -207,22 +207,34 @@ const QuestionDetail = () => {
                 .slice(0, isOpinionsExpanded ? allOpinions.length : 4);
 
               return (
-                <div
-                  className={`bg-gray-100 rounded-xl p-3 relative ${isOpinionsExpanded ? "" : "max-h-[200px] overflow-hidden"}`}
-                >
-                  <div className="flex flex-col md:flex-row md:flex-wrap gap-4 pt-3">
-                    {displayedOpinions.map((opinion) => (
-                      <OtherOpinionCard
-                        key={opinion.id}
-                        text={opinion.text}
-                        userName={opinion.userName}
-                        type={opinion.type}
-                        userIconColor={opinion.userIconColor}
-                      />
-                    ))}
+                <>
+                  <div
+                    className={`bg-gray-100 rounded-xl p-3 relative ${isOpinionsExpanded ? "" : "max-h-[200px] overflow-hidden"}`}
+                  >
+                    <div className="flex flex-col md:flex-row md:flex-wrap gap-4 pt-3">
+                      {displayedOpinions.map((opinion) => (
+                        <OtherOpinionCard
+                          key={opinion.id}
+                          text={opinion.text}
+                          userName={opinion.userName}
+                          type={opinion.type}
+                          userIconColor={opinion.userIconColor}
+                        />
+                      ))}
+                    </div>
+
+                    {/* グラデーションオーバーレイ - 展開時は非表示 */}
+                    {!isOpinionsExpanded && allOpinions.length > 4 && (
+                      <div className="absolute bottom-0 left-0 w-full h-[100px] bg-gradient-to-t from-gray-50 to-transparent pointer-events-none" />
+                    )}
+
+                    {/* スクロールバー - 展開時は非表示 */}
+                    {!isOpinionsExpanded && allOpinions.length > 4 && (
+                      <div className="absolute top-1 right-0 w-2.5 h-[106px] bg-black/16 rounded-full" />
+                    )}
                   </div>
 
-                  {/* 展開/折りたたみボタン */}
+                  {/* 展開/折りたたみボタン - コンテナの外に配置 */}
                   {allOpinions.length > 4 && (
                     <div className="flex justify-center mt-4">
                       <button
@@ -238,17 +250,7 @@ const QuestionDetail = () => {
                       </button>
                     </div>
                   )}
-
-                  {/* グラデーションオーバーレイ - 展開時は非表示 */}
-                  {!isOpinionsExpanded && allOpinions.length > 4 && (
-                    <div className="absolute bottom-0 left-0 w-full h-[100px] bg-gradient-to-t from-gray-50 to-transparent pointer-events-none" />
-                  )}
-
-                  {/* スクロールバー - 展開時は非表示 */}
-                  {!isOpinionsExpanded && allOpinions.length > 4 && (
-                    <div className="absolute top-1 right-0 w-2.5 h-[106px] bg-black/16 rounded-full" />
-                  )}
-                </div>
+                </>
               );
             })()}
           </div>
