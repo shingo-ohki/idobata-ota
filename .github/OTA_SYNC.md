@@ -67,3 +67,12 @@ Original OpenRouter key incident: historical `idea-discussion/backend/app.yaml`
 was blocked by GitHub Push Protection; current application source removed it,
 but the source repository's historical exposure remains a separate
 credential-rotation issue.
+
+## Continuous checks
+
+The separate `.github/workflows/scan-secrets.yml` runs Gitleaks on pull
+requests and pushes to `main`, including changes made outside the sync action.
+This is a working-tree scan; GitHub Push Protection additionally helps catch
+credentials in pushed commits. Neither mechanism guarantees that all secrets
+are detected. After verifying that this workflow actually runs, require its
+`Gitleaks worktree` check in the `main` ruleset if available.
