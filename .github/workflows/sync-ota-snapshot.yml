@@ -1,0 +1,158 @@
+name: Safe Ota source snapshot sync
+
+# Manual by design. Never fetch or merge upstream Git history into this repo.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: safe-ota-source-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out trusted EngageWorks main
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          persist-credentials: true
+
+      - name: Import Ota source tree from a fixed commit (not Git history)
+        id: snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git branch --show-current)" = "main"
+          test -z "$(git status --porcelain)"
+
+          # GitHub API is used only to resolve the Ota branch to an immutable SHA.
+          sha="$(gh api repos/samboofficeota-hue/idobata/commits/main --jq '.sha')"
+          if ! [[ "$sha" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "::error::Invalid source SHA"
+            exit 1
+          fi
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "Ota source commit: $sha"
+
+          tmp="$(mktemp -d)"
+          trap 'rm -rf "$tmp"' EXIT
+          mkdir -p "$tmp/source"
+          curl --fail --silent --show-error --location --retry 3 \
+            "https://api.github.com/repos/samboofficeota-hue/idobata/tarball/$sha" \
+            --output "$tmp/source.tar.gz"
+
+          # Only ordinary files and directories are accepted. Do not follow symlinks.
+          python3 - "$tmp/source.tar.gz" "$tmp/source" <<'PY'
+          import pathlib
+          import sys
+          import tarfile
+
+          archive, destination = sys.argv[1:]
+          with tarfile.open(archive, "r:gz") as tf:
+              members = tf.getmembers()
+              roots = {m.name.split("/")[0] for m in members if m.name}
+              if len(roots) != 1:
+                  raise SystemExit("Unexpected GitHub archive structure")
+              for member in members:
+                  parts = pathlib.PurePosixPath(member.name).parts
+                  if (
+                      not parts
+                      or any(p in (".", "..") for p in parts)
+                      or not (member.isfile() or member.isdir())
+                  ):
+                      raise SystemExit("Unexpected archive entry type or path")
+                  if len(parts) == 1:
+                      continue
+                  member.name = "/".join(parts[1:])
+                  tf.extract(member, destination, filter="data")
+          PY
+
+          # Protect EngageWorks workflows, Git metadata, env files and the known
+          # historical credential-bearing app.yaml. Import source CONTENT only.
+          rsync -a --delete \
+            --exclude='/.git/' \
+            --exclude='/.github/' \
+            --exclude='.env' \
+            --exclude='.env.*' \
+            --exclude='app.yaml' \
+            --exclude='.gitmodules' \
+            --exclude='*.pem' \
+            --exclude='*.key' \
+            --exclude='*.p12' \
+            --exclude='*.pfx' \
+            "$tmp/source/" ./
+
+          git add -A
+          if git diff --cached --quiet; then
+            echo "changes=false" >> "$GITHUB_OUTPUT"
+            echo "No source changes to propose."
+          else
+            echo "changes=true" >> "$GITHUB_OUTPUT"
+            echo "Source changes found. Secret scan is required before any push."
+            git diff --cached --stat
+          fi
+
+      - name: Scan working tree for secrets before any push
+        shell: bash
+        run: |
+          set -euo pipefail
+          # An immutable image digest; no network access inside the scan container.
+          docker run --rm --network none \
+            --volume "$PWD:/src:ro" \
+            ghcr.io/gitleaks/gitleaks@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f \
+            dir /src --no-banner --redact --exit-code 1
+
+      - name: Open a review-only pull request
+        if: steps.snapshot.outputs.changes == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ steps.snapshot.outputs.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          short="$(printf '%s' "$SOURCE_SHA" | cut -c1-12)"
+          branch="sync/ota-snapshot-$short"
+          title="chore: sync Ota source snapshot $short"
+          body="$(cat <<EOF
+          Automated source snapshot from samboofficeota-hue/idobata at commit $SOURCE_SHA.
+
+          - No upstream Git commits or Git history were imported.
+          - The destination .github directory and sensitive file patterns are excluded.
+          - Gitleaks completed before pushing the sync branch.
+          - Nothing is merged automatically.
+
+          Review source changes and verify application behavior before merging.
+          EOF
+          )"
+
+          if git ls-remote --exit-code --heads origin "refs/heads/$branch" > /dev/null; then
+            existing="$(gh pr list --state open --head "$branch" --json url --jq '.[0].url // empty')"
+            if test -n "$existing"; then
+              echo "Open PR already exists: $existing"
+              exit 0
+            fi
+            any="$(gh pr list --state all --head "$branch" --json number --jq 'length')"
+            if test "$any" -gt 0; then
+              echo "::error::Sync branch was used by a closed or merged PR; review manually."
+              exit 1
+            fi
+            # Recovery path if an earlier run pushed the branch but could not create a PR.
+          else
+            git switch -c "$branch"
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "$title"
+            git push --set-upstream origin "$branch"
+          fi
+
+          gh pr create --base main --head "$branch" \
+            --title "$title" --body "$body"
+          echo "Created a review-only PR. No automatic merge will occur."
