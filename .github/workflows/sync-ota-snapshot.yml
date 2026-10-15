@@ -1,0 +1,140 @@
+name: Safe Ota source snapshot sync
+
+# Opt-in. Never merge or fetch Ota Git commits into this repository.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+
+concurrency:
+  group: safe-ota-source-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout trusted EngageWorks main
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          persist-credentials: true
+
+      - name: Compare upstream and local changes without overwriting collisions
+        id: snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git branch --show-current)" = "main"
+          test -z "$(git status --porcelain)"
+
+          sha="$(gh api repos/samboofficeota-hue/idobata/commits/main --jq '.sha')"
+          old_sha="$(cat .github/ota-upstream-base.sha)"
+          for value in "$sha" "$old_sha"; do
+            if ! [[ "$value" =~ ^[0-9a-f]{40}$ ]]; then
+              echo "::error::Invalid source/baseline SHA"
+              exit 1
+            fi
+          done
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "Base Ota SHA: $old_sha"
+          echo "Current Ota SHA: $sha"
+
+          tmp="$(mktemp -d)"
+          trap 'rm -rf "$tmp"' EXIT
+          curl --fail --silent --show-error --location --retry 3 \
+            "https://api.github.com/repos/samboofficeota-hue/idobata/tarball/$old_sha" \
+            --output "$tmp/base.tar.gz"
+          curl --fail --silent --show-error --location --retry 3 \
+            "https://api.github.com/repos/samboofficeota-hue/idobata/tarball/$sha" \
+            --output "$tmp/head.tar.gz"
+
+          python3 .github/scripts/sync_ota_source.py \
+            --base-tar "$tmp/base.tar.gz" \
+            --head-tar "$tmp/head.tar.gz" \
+            --base-sha "$old_sha" \
+            --source-sha "$sha" \
+            --report "$RUNNER_TEMP/ota-report.md" \
+            --output "$GITHUB_OUTPUT"
+
+          cat "$RUNNER_TEMP/ota-report.md" >> "$GITHUB_STEP_SUMMARY"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "changes=false" >> "$GITHUB_OUTPUT"
+            echo "No source changes to propose."
+          else
+            echo "changes=true" >> "$GITHUB_OUTPUT"
+            git diff --cached --stat
+          fi
+
+      - name: Scan resulting working tree for secrets before any push
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run --rm --network none \
+            --volume "$PWD:/src:ro" \
+            ghcr.io/gitleaks/gitleaks@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f \
+            dir /src --no-banner --redact --exit-code 1
+
+      - name: Create a review PR with the collision report
+        if: steps.snapshot.outputs.changes == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ steps.snapshot.outputs.sha }}
+          COLLISIONS: ${{ steps.snapshot.outputs.collisions }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          short="$(printf '%s' "$SOURCE_SHA" | cut -c1-12)"
+          base_short="$(git rev-parse --short=10 HEAD)"
+          branch="sync/ota-$short-$base_short"
+          title="chore: sync Ota source $short"
+          if test "$COLLISIONS" -gt 0; then
+            title="review required: Ota sync $short ($COLLISIONS collisions)"
+          fi
+
+          {
+            echo "Automated source-only synchronization from"
+            echo "\`samboofficeota-hue/idobata\` at \`$SOURCE_SHA\`."
+            echo ""
+            cat "$RUNNER_TEMP/ota-report.md"
+            echo ""
+            echo "No upstream Git commits were fetched/merged, and no auto-merge will occur."
+            echo "Secrets scanning passed before the branch was pushed."
+          } > "$RUNNER_TEMP/ota-pr-body.md"
+
+          if git ls-remote --exit-code --heads origin "refs/heads/$branch" > /dev/null; then
+            existing="$(gh pr list --state open --head "$branch" --json url --jq '.[0].url // empty')"
+            if test -n "$existing"; then
+              echo "Open PR already exists: $existing"
+              gh workflow run scan-secrets.yml --ref "$branch"
+              exit 0
+            fi
+            count="$(gh pr list --state all --head "$branch" --json number --jq 'length')"
+            if test "$count" -gt 0; then
+              echo "::error::A PR for this upstream and base revision was already closed/merged."
+              exit 1
+            fi
+          else
+            git switch -c "$branch"
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "$title"
+            git push --set-upstream origin "$branch"
+          fi
+
+          if test "$COLLISIONS" -gt 0; then
+            gh pr create --draft --base main --head "$branch" \
+              --title "$title" --body-file "$RUNNER_TEMP/ota-pr-body.md"
+          else
+            gh pr create --base main --head "$branch" \
+              --title "$title" --body-file "$RUNNER_TEMP/ota-pr-body.md"
+          fi
+          gh workflow run scan-secrets.yml --ref "$branch"
+          echo "Created a PR and dispatched its read-only safety checks. No automatic merge."
