@@ -12,8 +12,10 @@ RUN npm install
 # Copy source code
 COPY . .
 
-# Configurable at build time; defaults preserve existing deployment behavior.
-ARG VITE_API_BASE_URL=https://idobata-backend-production.up.railway.app
+# An explicit API origin is required for every image build.
+# Avoid embedding an unintended environment-specific endpoint in static assets.
+ARG VITE_API_BASE_URL
+RUN test -n "$VITE_API_BASE_URL" || (echo 'Build arg VITE_API_BASE_URL is required' >&2; exit 1)
 ENV VITE_API_BASE_URL=${VITE_API_BASE_URL}
 
 # Build the application
