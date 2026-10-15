@@ -17,8 +17,9 @@ in the DD2030 upstream repository.
    downloads the *source archive* at that SHA, excludes local/sensitive paths,
    and scans the resulting working tree using Gitleaks before any push.
 5. If there are changes, a branch `sync/ota-snapshot-<sha>` and **review-only
-   pull request** are created. Review the full diff, test behavior and then
-   merge manually. A successful run with "No source changes" is normal when
+   pull request** are created with a collision analysis. If there are
+   overlapping changes, the pull request is draft and does not overwrite
+   EngageWorks modifications. Resolve all collisions before merging. A successful run with "No source changes" is normal when
    the two current source trees already match.
 6. Deploy only a revision of *this* repository that you have approved.
 
@@ -33,9 +34,10 @@ in the DD2030 upstream repository.
   Exclusions are **not** a replacement for secret scanning and review.
 - The sync branch is not automatically merged, and the workflow does not
   execute build scripts from the imported source.
-- Upstream changes may overwrite EngageWorks-specific source code or delete
-  previously present files. The PR diff is the final review gate; keep
-  EngageWorks infrastructure/configuration in a separate repository.
+- The importer compares both sides against the previous Ota snapshot; it
+  never overwrites paths modified on both sides. Even if a collision is not
+  found, API/behavioral incompatibilities may exist, so review the PR diff.
+  Keep EngageWorks infrastructure/configuration in a separate repository.
 - If Gitleaks blocks an update, investigate without displaying or committing
   the secret. Do not bypass GitHub Push Protection. Credential revocation and
   rotation must be coordinated with the original key owner.
@@ -76,3 +78,50 @@ This is a working-tree scan; GitHub Push Protection additionally helps catch
 credentials in pushed commits. Neither mechanism guarantees that all secrets
 are detected. After verifying that this workflow actually runs, require its
 `Gitleaks worktree` check in the `main` ruleset if available.
+
+## Collision detection (Actions + PR)
+
+The baseline `.github/ota-upstream-base.sha` records the **last completely
+integrated Ota source snapshot**. The import job downloads two immutable
+archives (previous baseline and current Ota main) and compares them with
+the current EngageWorks source tree. It is intentionally conservative at
+the **file-path level**:
+
+| Compared path | Action |
+| --- | --- |
+| Changed only in Ota | Apply upstream version |
+| Changed only in EngageWorks | Keep EngageWorks version |
+| Both changed, but already identical to new Ota | Treat as integrated |
+| Both changed to different content | **Preserve EngageWorks content; report collision** |
+| Removed in Ota, edited in EngageWorks | **Preserve EngageWorks content; report collision** |
+
+The GitHub Action writes a Japanese-language collision report to its job
+summary **and the created PR description**. The PR contains only safe
+(non-colliding) updates. If there are collisions, the PR is **DRAFT**, includes
+`.github/OTA_SYNC_PENDING.md` and the baseline is **not advanced**.
+The separate Secrets scan refuses to pass while that pending file exists.
+
+### Resolving a collision
+
+1. Review the Ota version, EngageWorks version and old baseline. A path-level
+   collision does not necessarily mean the same lines conflict.
+2. On the sync PR branch, implement/review the correct combined code for
+   every listed path, rather than selecting Ota wholesale.
+3. Once **every** conflict is resolved and tested, delete
+   `.github/OTA_SYNC_PENDING.md` and update
+   `.github/ota-upstream-base.sha` to the **new Ota SHA from the PR body**.
+   These are deliberate maintainer actions; the Action never marks a
+   partial integration complete.
+4. Run/re-run the Secrets scan on that branch if it has not run
+   automatically. Check that it passes, review the complete diff, mark
+   the draft PR ready, and merge it.
+
+The sync job explicitly dispatches `Secrets scan` on its generated branch,
+because GitHub events caused by `GITHUB_TOKEN` alone typically do not trigger
+another workflow run. The job uses `actions: write` for that dispatch.
+The scanning job itself requires read-only contents permission.
+
+**Limitations:** This is a conservative file-path overlap detector, not a
+semantic or dependency-level compatibility analyzer. No automated check can
+guarantee that an upstream API change won't break an EngageWorks extension
+in a different file. Regression testing and review are still required.
