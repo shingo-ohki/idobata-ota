@@ -7,6 +7,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: write
 
 concurrency:
   group: safe-ota-source-sync
@@ -112,6 +113,7 @@ jobs:
             existing="$(gh pr list --state open --head "$branch" --json url --jq '.[0].url // empty')"
             if test -n "$existing"; then
               echo "Open PR already exists: $existing"
+              gh workflow run scan-secrets.yml --ref "$branch"
               exit 0
             fi
             count="$(gh pr list --state all --head "$branch" --json number --jq 'length')"
@@ -134,4 +136,5 @@ jobs:
             gh pr create --base main --head "$branch" \
               --title "$title" --body-file "$RUNNER_TEMP/ota-pr-body.md"
           fi
-          echo "Created a PR for manual review. No automatic merge."
+          gh workflow run scan-secrets.yml --ref "$branch"
+          echo "Created a PR and dispatched its read-only safety checks. No automatic merge."
