@@ -98,3 +98,54 @@ admin/
 認証は JWT (JSON Web Tokens) を使用しています。ログイン時にサーバーからトークンを取得し、それをローカルストレージに保存します。その後の API 通信ではこのトークンを Authorization ヘッダーに含めることで認証を行います。
 
 ログアウト時には、ローカルストレージからトークンを削除し、認証状態をクリアします。
+
+## Basic認証付きリバースプロキシでホスティングする場合
+
+管理画面のJWTは通常 `Authorization: Bearer <JWT>` で送信します。リバースプロキシ側が同じ `Authorization` ヘッダーをHTTP Basic認証に使う構成では、管理画面のビルド時に `VITE_JWT_AUTH_HEADER=X-Idobata-JWT` を指定できます。指定しなければ従来どおり `Authorization` を使います。
+
+Dockerイメージの場合は、`.env` だけに設定してもビルドへ渡されないことがあります。adminサービスのComposeの `build.args.VITE_JWT_AUTH_HEADER` に明示的に指定してビルドしてください。設定値はクライアントのJavaScriptへ埋め込まれますが、JWTそのものをビルド変数に指定してはいけません。
+
+Caddyなどのプロキシ側では、管理画面と `/api/*` を含む**すべての経路**をHTTP Basic認証で保護した後、管理APIの転送時にのみ次のようにJWTヘッダーを復元します（構成例。backendのホスト名や認証設定は環境に合わせる）。
+
+```caddyfile
+route {
+    basic_auth {
+        admin {$ADMIN_BASIC_HASH}
+    }
+
+    handle /api/* {
+        reverse_proxy backend:3000 {
+            header_up Authorization {http.request.header.X-Idobata-JWT}
+            header_up -X-Idobata-JWT
+        }
+    }
+
+    handle /socket.io/* {
+        reverse_proxy backend:3000
+    }
+
+    handle /uploads/* {
+        reverse_proxy backend:3000
+    }
+
+    handle {
+        reverse_proxy admin:8080
+    }
+}
+```
+
+`X-Idobata-JWT` はBasic認証の代わりになるものではありません。リバースプロキシを通らずbackendへ直接アクセスできる公開ポートを作らないでください。JWTを付けない、または無効なJWTを付けた管理APIのリクエストは、従来どおりbackendのJWT認証で拒否される必要があります。
+
+### 公開前の統合テスト（VPSなどの実際のプロキシ環境で実施）
+
+以下は**受入テスト項目**です。PRのユニットテストは管理画面の送信ヘッダーのみを検証し、Caddy自体を起動した統合テストではありません。Caddyfileは適用前に `caddy validate` を通してください。
+
+- [ ] Basic認証なしで `/` と `/api/auth/me` にアクセスして401になる（管理画面のHTMLもAPIも返さない）。
+- [ ] 誤ったBasic認証情報でも401になる。
+- [ ] 正しいBasic認証で管理画面が表示できるが、JWTなしの `/api/auth/me` はbackendで401になる。
+- [ ] 正しいBasic認証と無効な `X-Idobata-JWT: Bearer ...` を送ってもbackendで401になる。
+- [ ] 正しいBasic認証後、管理画面内でログインして `/api/auth/me` が200になり、認証付き管理操作が動作する。
+- [ ] `/socket.io/*`、`/uploads/*` などもBasic認証なしでアクセスできず、正規のブラウザからの通信は動作する。
+- [ ] 別の閲覧用Basic資格情報で管理ホストを開けず、既存のホストへのアクセスは引き続き正常。
+
+テスト時のパスワード、JWT、APIキー、`docker compose config` の展開結果をログ・PR・Issueへ貼らないでください。
