@@ -68,7 +68,7 @@ export class ApiClient {
               ? "Bearer ***"
               : value,
           ])
-        ),,
+        ),
       });
     }
 
