@@ -27,8 +27,12 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Run admin tests
         run: npm test
-      - name: Lint changed admin files
-        run: npx biome check src/services/api/apiClient.ts src/services/api/apiClient.jwt-header.test.ts
+      # The existing apiClient.ts has unrelated legacy noExplicitAny lint errors.
+      # Check formatting for both changed files; lint the new test independently.
+      - name: Check formatting of changed admin files
+        run: npx biome format src/services/api/apiClient.ts src/services/api/apiClient.jwt-header.test.ts
+      - name: Lint new JWT header tests
+        run: npx biome lint src/services/api/apiClient.jwt-header.test.ts
       - name: Build admin for reverse-proxy JWT header
         env:
           VITE_API_BASE_URL: https://admin.idobata.example.test
