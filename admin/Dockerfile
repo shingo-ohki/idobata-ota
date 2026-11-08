@@ -18,6 +18,11 @@ ARG VITE_API_BASE_URL
 RUN test -n "$VITE_API_BASE_URL" || (echo 'Build arg VITE_API_BASE_URL is required' >&2; exit 1)
 ENV VITE_API_BASE_URL=${VITE_API_BASE_URL}
 
+# Optional: use a dedicated JWT header behind a Basic-auth reverse proxy.
+# Defaults to the original Authorization header in other deployments.
+ARG VITE_JWT_AUTH_HEADER=Authorization
+ENV VITE_JWT_AUTH_HEADER=${VITE_JWT_AUTH_HEADER}
+
 # Build the application
 RUN npm run build
 
