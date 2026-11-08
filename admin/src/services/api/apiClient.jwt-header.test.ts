@@ -15,12 +15,14 @@ async function requestWithToken(header?: string) {
     getItem: (key: string) => (key === "auth_token" ? "test-jwt-secret" : null),
   });
 
-  const fetchMock = vi.fn(async (_input: string | URL | Request, _init?: RequestInit) => {
-    return new Response(JSON.stringify({ user: { id: "1" } }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
-  });
+  const fetchMock = vi.fn(
+    async (_input: string | URL | Request, _init?: RequestInit) => {
+      return new Response(JSON.stringify({ user: { id: "1" } }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+  );
   vi.stubGlobal("fetch", fetchMock);
   const log = vi.spyOn(console, "log").mockImplementation(() => {});
 
