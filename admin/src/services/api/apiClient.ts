@@ -39,9 +39,15 @@ export class ApiClient {
       ...options.headers,
     };
 
+    // A reverse proxy may need Authorization for HTTP Basic authentication.
+    // Use a separate JWT header only when explicitly configured at build time.
+    const jwtHeader =
+      import.meta.env.VITE_JWT_AUTH_HEADER === "X-Idobata-JWT"
+        ? "X-Idobata-JWT"
+        : "Authorization";
     const token = localStorage.getItem("auth_token");
     if (token) {
-      (headers as Record<string, string>).Authorization = `Bearer ${token}`;
+      (headers as Record<string, string>)[jwtHeader] = `Bearer ${token}`;
     }
 
     const config = {
@@ -54,10 +60,15 @@ export class ApiClient {
       console.log("[ApiClient] Request:", {
         url,
         method: options.method || "GET",
-        headers: {
-          ...headers,
-          Authorization: token ? "Bearer ***" : undefined,
-        },
+        headers: Object.fromEntries(
+          Object.entries(headers).map(([name, value]) => [
+            name,
+            name.toLowerCase() === "authorization" ||
+            name.toLowerCase() === "x-idobata-jwt"
+              ? "Bearer ***"
+              : value,
+          ])
+        ),,
       });
     }
 
