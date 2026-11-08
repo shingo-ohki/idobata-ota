@@ -7,8 +7,9 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
-async function requestWithToken(header: string) {
+async function requestWithToken(header?: string) {
   vi.stubEnv("VITE_API_BASE_URL", "https://admin.idobata.example.test");
+  // Explicitly unset the setting to verify compatibility with older builds.
   vi.stubEnv("VITE_JWT_AUTH_HEADER", header);
   vi.stubGlobal("localStorage", {
     getItem: (key: string) => (key === "auth_token" ? "test-jwt-secret" : null),
@@ -34,7 +35,13 @@ async function requestWithToken(header: string) {
 }
 
 describe("admin API JWT header", () => {
-  it("uses Authorization by default", async () => {
+  it("uses Authorization when VITE_JWT_AUTH_HEADER is unset", async () => {
+    const headers = await requestWithToken();
+    expect(headers.Authorization).toBe("Bearer test-jwt-secret");
+    expect(headers["X-Idobata-JWT"]).toBeUndefined();
+  });
+
+  it("uses Authorization when the setting is empty", async () => {
     const headers = await requestWithToken("");
     expect(headers.Authorization).toBe("Bearer test-jwt-secret");
     expect(headers["X-Idobata-JWT"]).toBeUndefined();
